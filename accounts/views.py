@@ -4,6 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import UserInfo
 from django.shortcuts import redirect,HttpResponse,render_to_response
 from .decorators import is_login_auth,is_admin_auth
+import hashlib
 
 #登陆
 @csrf_exempt
@@ -14,8 +15,9 @@ def login(request):
         username = request.POST.get('username',None)
         password = request.POST.get('password',None)
         is_not_empty=all([username,password])
+        passwdhash = hashlib.sha1(password+username).hexdigest()
         if is_not_empty:
-            count = UserInfo.objects.filter(username=username,password=password).count()
+            count = UserInfo.objects.filter(username=username,password=passwdhash).count()
             #判断输入用户名密码OK，则跳转到主页面
             if count == 1:
                 request.session['username'] = username
