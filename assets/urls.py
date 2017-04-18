@@ -16,18 +16,8 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-import accounts
-import assets
-from accounts.views import login
-
-#保证admin的时间控件可以用，默认时需要登录admin用户后才能使用，不然使用时会因为获取不到token而使用不了，这里使用直接跳过。
-def i18n_javascript(request):
-    return admin.site.i18n_javascript(request)
+from .views import index
 
 urlpatterns = [
-    url(r'^admin/jsi18n', i18n_javascript),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^accounts/', include('accounts.urls')),
-    url(r'^assets/', include('assets.urls')),
-    url(r'^$', login),
+               url(r'^$', index),
 ]

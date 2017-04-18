@@ -25,7 +25,7 @@ def login(request):
                 #log.info("user login : {}".format(username))
                 return redirect('/assets/index/')
             else:
-                ret['status']='password error'
+                ret['status']='username or password is error'
         else:
             ret['status']='can not empty'
     return render_to_response('login.html',ret)
