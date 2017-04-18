@@ -31,54 +31,154 @@
   
 </head>
 
-<body>
+<body style="overflow-y: scroll;">
 
-	<div class="navbar navbar-default " role="navigation">
+	<div class="navbar navbar-default navbar-static-top" role="navigation">
+	<a class="navbar-brand" href="#">playcmdb</a>
 	<div class="container">
 		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-				<span class="sr-only">导航栏</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" >导航栏</a>
+			<ul class="navbar-right">
+				<button type="button" class="btn btn-primary" title="个人信息" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<br>账号：{{ UserInfoObj.username }}</br><br>用户姓名：{{ UserInfoObj.realname }}</br><br>用户类型：{{ UserInfoObj.type }}</br>">
+		     		个人信息
+		  		</button>
+		  	</ul>
 		</div>
 		<div class="collapse navbar-collapse">
-			<ul class="nav navbar-nav">
-				<li class="active"><a href="/web/index/">主机资讯列表</a></li>
-				<li><a href="/web/submit/">添加主机资讯</a></li>
-				<li class="active"><a href="/web/infoshow/">主机信息展示</a></li>
-			</ul>
 			<ul class="navbar-right">
 				<a href="/web/logout/" class="btn btn-primary btn-danger" role="button">退出</a>
 			</ul>
 		</div>
+
 	</div>
 	</div>
 
-
-	<div class="container">
-	{% block content %}{% endblock %}
-	</div>
-	
+<div class="container-fluid" >
+	<div class="row" >
+		<div class="col-md-2">
 
 
-	<div class="navbar navbar-default " role="navigation">
-	<div class="container">
-		<div class="navbar-header">
-			<a class="navbar-brand" >connected as {{ UserInfoObj.username }}
-			</a>
+
+                <div class="panel-group table-responsive" role="tablist">
+                    <div class="panel panel-primary">
+                        <!-- 利用data-target指定要折叠的分组列表 -->
+                        <div class="panel-heading" id="collapseListGroupHeading1" data-toggle="collapse" data-target="#collapseListGroup1" role="tab" >
+                            <h4 class="panel-title">
+                            	资产管理
+                                <span class="glyphicon glyphicon-chevron-down right"></span>
+                            </h4>
+                        </div>
+                        <!-- .panel-collapse和.collapse标明折叠元素 .in表示要显示出来 -->
+                        <div id="collapseListGroup1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading1">
+                            <ul class="list-group">
+                              <li class="list-group-item">
+                                <!-- 利用data-target指定URL -->
+                                <button class="menu-item-left" data-target="test2.html">
+                                    <span class="glyphicon glyphicon-triangle-right"></span>资产信息
+                                </button>
+                              </li>
+                              <li class="list-group-item">
+                                <button class="menu-item-left">
+                                    <span class="glyphicon glyphicon-triangle-right"></span>虚拟化信息
+                                </button>
+                              </li>
+                              <li class="list-group-item">
+                                <button class="menu-item-left">
+                                    <span class="glyphicon glyphicon-triangle-right"></span>机房信息
+                                </button>
+                              </li>
+                              <li class="list-group-item">
+                                <button class="menu-item-left">
+                                    <span class="glyphicon glyphicon-triangle-right"></span>分组项1-4
+                                </button>
+                              </li>
+                              <li class="list-group-item">
+                                <button class="menu-item-left">
+                                    <span class="glyphicon glyphicon-triangle-right"></span>分组项1-5
+                                </button>
+                              </li>
+                            </ul>
+                        </div>
+                    </div><!--panel end-->
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" id="collapseListGroupHeading2" data-toggle="collapse" data-target="#collapseListGroup2" role="tab" >
+                            <h4 class="panel-title">
+								账号管理
+                                <span class="glyphicon glyphicon-chevron-down right"></span>
+                            </h4>
+                        </div>
+                        <div id="collapseListGroup2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading2">
+                            <ul class="list-group">
+                              <li class="list-group-item">
+                                <button class="menu-item-left">
+                                    <span class="glyphicon glyphicon-triangle-right"></span>分组项2-1
+                                </button>
+                              </li>
+                              <li class="list-group-item">
+                                <button class="menu-item-left">
+                                    <span class="glyphicon glyphicon-triangle-right"></span>分组项2-2
+                                </button>
+                              </li>
+                              <li class="list-group-item">
+                                <button class="menu-item-left">
+                                    <span class="glyphicon glyphicon-triangle-right"></span>分组项2-3
+                                </button>
+                              </li>
+                              <li class="list-group-item">
+                                <button class="menu-item-left">
+                                    <span class="glyphicon glyphicon-triangle-right"></span>分组项2-4
+                                </button>
+                              </li>
+                            </ul>
+                        </div>
+                    </div>  
+                    
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" id="collapseListGroupHeading3" data-toggle="collapse" data-target="#collapseListGroup3" role="tab" >
+                            <h4 class="panel-title">
+								仪表盘
+                                <span class="glyphicon glyphicon-chevron-down right"></span>
+                            </h4>
+                        </div>
+                        <div id="collapseListGroup3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading3">
+                            <ul class="list-group">
+                              <li class="list-group-item">
+                                <button class="menu-item-left">
+                                    <span class="glyphicon glyphicon-triangle-right"></span>仪表盘2-1
+                                </button>
+                              </li>
+                              <li class="list-group-item">
+                                <button class="menu-item-left">
+                                    <span class="glyphicon glyphicon-triangle-right"></span>仪表盘2-2
+                                </button>
+                              </li>
+                              <li class="list-group-item">
+                                <button class="menu-item-left">
+                                    <span class="glyphicon glyphicon-triangle-right"></span>仪表盘2-3
+                                </button>
+                              </li>
+                              <li class="list-group-item">
+                                <button class="menu-item-left">
+                                    <span class="glyphicon glyphicon-triangle-right"></span>仪表盘2-4
+                                </button>
+                              </li>
+                            </ul>
+                        </div>
+                    </div>  
+                    
+                </div>
+
+
+
+
+
 		</div>
-		<ul class="navbar-right">
-			<button type="button" class="btn btn-primary" title="个人信息"  
-      		data-container="body" data-toggle="popover" data-placement="top" 
-      		data-content="<br>用户姓名：{{ UserInfoObj.realname }}</br><br>用户类型：{{ UserInfoObj.type }}</br>">
-      		个人信息
-   			</button>
-   		</ul>
+		<div class="col-md-10">
+			<div>
+			{% block content %}{% endblock %}
+			</div>
+		</div>
 	</div>
-	</div>
+</div>
 
 
 
