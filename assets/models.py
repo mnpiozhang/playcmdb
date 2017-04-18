@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 from django.db import models
+from business.models import BusinessInfo
 
 class AssetType(models.Model):
     #ex: server router switch or firewall...
@@ -34,9 +35,11 @@ class AssetInfo(models.Model):
     rack = models.CharField(max_length=20,verbose_name = u'机架位置')
     size = models.CharField(max_length=20,verbose_name = u'尺寸')
     ip = models.CharField(max_length = 20,unique=True,verbose_name = u'IP地址')
+    mac = models.CharField(max_length = 20,verbose_name = u'MAC地址')
     memery_size = models.CharField(max_length = 20,verbose_name = u'内存')
     cpu = models.CharField(max_length = 20,verbose_name = u'cpu型号')
     cpu_cores = models.CharField(max_length = 10,verbose_name = u'cpucore数量')
     cpu_pyhsical = models.CharField(max_length = 10,verbose_name = u'cpu物理数量')
+    business = models.ManyToManyField(BusinessInfo,related_name='asset_business',verbose_name = u'归属的业务条线')
     def __unicode__(self):
         return self.asset_name
