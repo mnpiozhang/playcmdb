@@ -34,7 +34,7 @@ def index(request,page=1):
             Qset['searchip'] = searchip
             Qset['tmpstarttime'] = tmpstarttime
             Qset['tmpendtime'] = tmpendtime
-
+            print Qset
             #判断是否输入了开始时间，没输入或输入非法则默认为1970.01.01
             try:
                 searchstarttime = datetime.datetime.strptime(tmpstarttime,'%Y-%m-%d')
