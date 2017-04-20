@@ -20,3 +20,12 @@ class UserType(models.Model):
     typename= models.CharField(max_length=50,verbose_name = u'用户类型名称')
     def __unicode__(self):
         return self.typename
+    
+
+    
+class AuditInfo(models.Model):
+    account = models.CharField(max_length=50,verbose_name = u'操作用户')
+    operation = models.CharField(max_length=20,verbose_name = u'操作')
+    target = models.CharField(max_length=30,verbose_name = u'操作目标')
+    timestamp = models.DateTimeField(auto_now_add = True,verbose_name = u'操作时间')
+    remote_ip = models.CharField(max_length=30,verbose_name = u'操作远端ip')

@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 from accounts.decorators import is_login_auth
-from django.shortcuts import render,render_to_response,HttpResponse
+from django.shortcuts import render,render_to_response,HttpResponse,redirect
 import datetime
 from .models import AssetInfo
 from django.db.models import Q
-from .utils import Page,page_div,query_page_div
-from accounts.models import UserInfo
+from .utils import Page,page_div,query_page_div,audit_record_del
+from accounts.models import UserInfo,AuditInfo
 from django.template.context import RequestContext
 
 # Create your views here.
@@ -31,6 +31,10 @@ def index(request,page=1):
             Qset['searchasset'] = searchasset
             Qset['searchsn'] = searchsn
             Qset['searchpublish'] = searchpublish
+            if searchpublish == "all":
+                tmpstatus = ""
+            else:
+                tmpstatus = searchpublish
             Qset['searchip'] = searchip
             Qset['tmpstarttime'] = tmpstarttime
             Qset['tmpendtime'] = tmpendtime
@@ -47,7 +51,7 @@ def index(request,page=1):
                 searchendtime = datetime.datetime.now()
             allAsset = AssetInfo.objects.filter(Q(ip__contains=searchip)
                                                 &Q(asset_name__contains=searchasset)
-                                                &Q(status__contains=searchpublish)
+                                                &Q(status__contains=tmpstatus)
                                                 &Q(serial_number__contains=searchsn)
                                                 &Q(timestamp__gte=searchstarttime)
                                                 &Q(timestamp__lte=searchendtime))
@@ -82,3 +86,26 @@ def index(request,page=1):
             return render_to_response('assets/index.html',ret,context_instance=RequestContext(request))
     else:
         return HttpResponse("this is a web page , please use metod GET")
+    
+#删除资产信息信息
+@is_login_auth
+def delasset(request,id):
+    AssetObj = AssetInfo.objects.get(id=id)
+    audit_record_del(request,AssetObj.asset_name)
+    AssetObj.delete()
+    return redirect("/assets/index/")
+
+
+#显示资产信息详情
+@is_login_auth
+def details(request,id):
+    ret = {'AssetObj':None,'UserInfoObj':None}
+    AssetObj = AssetInfo.objects.get(id=id)
+    ret['AssetObj'] = AssetObj
+    UserInfoObj = UserInfo.objects.get(username=request.session.get('username',None))
+    ret['UserInfoObj'] = UserInfoObj
+    ret['id'] = id
+    return render_to_response('assets/details.html',ret)
+    
+    
+    

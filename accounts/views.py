@@ -5,6 +5,7 @@ from .models import UserInfo
 from django.shortcuts import redirect,HttpResponse,render_to_response
 from .decorators import is_login_auth,is_admin_auth
 import hashlib
+from assets.utils import audit_record_login,audit_record_logout
 
 #登陆
 @csrf_exempt
@@ -21,7 +22,8 @@ def login(request):
             #判断输入用户名密码OK，则跳转到主页面
             if count == 1:
                 request.session['username'] = username
-                request.session['login_auth'] = True
+                request.session['login_auth'] = True 
+                audit_record_login(request)
                 #log.info("user login : {}".format(username))
                 return redirect('/assets/index/')
             else:
@@ -34,6 +36,7 @@ def login(request):
 @is_login_auth
 def logout(request):
     #log.info("user logout : {}".format(request.session['username']))
+    audit_record_logout(request)
     del request.session['login_auth']
     del request.session['username']
-    return redirect("/web/login/")
+    return redirect("/accounts/login/")

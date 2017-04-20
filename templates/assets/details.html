@@ -1,0 +1,80 @@
+{% extends "suit/base.html" %}
+
+{% block content %}
+
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+        	<div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>资产管理 <span class="c-gray en">&gt;</span>资产信息<span class="c-gray en">&gt;</span>设备{{ AssetObj.id }}的详细信息</div>
+        </div>
+    </div>
+</div>
+
+<div class="row-content am-cf">
+
+                <div class="row am-cf">
+                    <div class="am-u-sm-12 am-u-md-12  am-u-lg-8">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title am-fl">基本信息</div>
+                            </div>
+                            <div class="widget-body-lg widget-body am-fr" >
+							<ul class="am-list am-list-static">
+							  <li><label for="user-email" class="am-u-sm-3 am-form-label">资产名称</label>{{ AssetObj.asset_name }}</li>
+							  <li><label for="user-email" class="am-u-sm-3 am-form-label">资产类型</label>{{ AssetObj.asset_type }}</li>
+							  <li><label for="user-email" class="am-u-sm-3 am-form-label">系统类型</label>{{ AssetObj.system_type }}</li>
+							  <li><label for="user-email" class="am-u-sm-3 am-form-label">设备位数</label>{{ AssetObj.machine_type }}</li>
+							  <li><label for="user-email" class="am-u-sm-3 am-form-label">产品名称</label>{{ AssetObj.product }}</li>
+							  <li><label for="user-email" class="am-u-sm-3 am-form-label">序列号</label>{{ AssetObj.serial_number }}</li>
+							  <li><label for="user-email" class="am-u-sm-3 am-form-label">所在机房</label>{{ AssetObj.location }}</li>
+							  <li><label for="user-email" class="am-u-sm-3 am-form-label">位置</label>{{ AssetObj.rack }}</li>
+							  <li><label for="user-email" class="am-u-sm-3 am-form-label">尺寸</label>{{ AssetObj.size }}</li>
+							  <li><label for="user-email" class="am-u-sm-3 am-form-label">业务条线</label>
+							  {% for i in AssetObj.business.all %}
+							  {{ i }},
+							  {% endfor %}
+							  </li>
+							</ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="am-u-sm-12 am-u-md-12  am-u-lg-4">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title am-fl">专用服务器负载</div>
+                                <div class="widget-function am-fr">
+                                    <a href="javascript:;" class="am-icon-cog"></a>
+                                </div>
+                            </div>
+                            <div class="widget-body widget-body-md am-fr">
+
+                                <div class="am-progress-title">CPU Load <span class="am-fr am-progress-title-more">28% / 100%</span></div>
+                                <div class="am-progress">
+                                    <div class="am-progress-bar" style="width: 15%"></div>
+                                </div>
+                                <div class="am-progress-title">CPU Load <span class="am-fr am-progress-title-more">28% / 100%</span></div>
+                                <div class="am-progress">
+                                    <div class="am-progress-bar  am-progress-bar-warning" style="width: 75%"></div>
+                                </div>
+                                <div class="am-progress-title">CPU Load <span class="am-fr am-progress-title-more">28% / 100%</span></div>
+                                <div class="am-progress">
+                                    <div class="am-progress-bar am-progress-bar-danger" style="width: 35%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+</div>
+
+
+
+
+
+
+
+
+{% endblock %}

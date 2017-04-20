@@ -17,8 +17,9 @@
     <link rel="stylesheet" href="/static/assets/css/amazeui.datatables.min.css" />
     <link rel="stylesheet" href="/static/assets/css/app.css">
     <script src="/static/assets/js/jquery.min.js"></script>
+    <!-- 
 	<script src="/static/bootstrap/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css"> -->
 </head>
 
 <body data-type="widgets">
@@ -85,7 +86,7 @@
 
                         <!-- 退出 -->
                         <li class="am-text-sm">
-                            <a href="/web/logout/">
+                            <a href="/accounts/logout/">
                                 <span class="am-icon-sign-out"></span> 退出
                             </a>
                         </li>
@@ -95,8 +96,40 @@
 
         </header>
 
+        <!-- 风格切换 -->
+        <div class="tpl-skiner">
+            <div class="tpl-skiner-toggle am-icon-cog">
+            </div>
+            <div class="tpl-skiner-content">
+                <div class="tpl-skiner-content-title">
+                    选择主题
+                </div>
+                <div class="tpl-skiner-content-bar">
+                    <span class="skiner-color skiner-white" data-color="theme-white"></span>
+                    <span class="skiner-color skiner-black" data-color="theme-black"></span>
+                </div>
+            </div>
+        </div>
+
+
+
+
         <!-- 侧边导航栏 -->
         <div class="left-sidebar">
+            <!-- 用户信息 -->
+            <div class="tpl-sidebar-user-panel">
+                <div class="tpl-user-panel-slide-toggleable">
+                    <div class="tpl-user-panel-profile-picture">
+                        <img src="assets/img/user04.png" alt="">
+                    </div>
+                    <span class="user-panel-logged-in-text">
+              		<i class="am-icon-circle-o am-text-success tpl-user-panel-status-icon"></i>
+					playcmdb
+          			</span>
+                </div>
+            </div>
+        
+        
             <!-- 菜单 -->
             <ul class="sidebar-nav">
                 <li class="sidebar-nav-link">
@@ -139,7 +172,7 @@
 
                         <li class="sidebar-nav-link">
                             <a href="table-list-img.html">
-                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 日志记录
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 操作审计
                             </a>
                         </li>
                     </ul>

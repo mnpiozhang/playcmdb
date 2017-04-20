@@ -5,7 +5,7 @@
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="widget-title am-fl"><span class="am-icon-home page-header-heading-icon"></span>资产管理 <span class="c-gray en">&gt;</span>资产信息 </div>
+        	<div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>资产管理 <span class="c-gray en">&gt;</span>资产信息</div>
         </div>
     </div>
 
@@ -22,8 +22,8 @@
                     		<div class="am-form-group ">
                     			<label class="am-u-sm-3 am-form-label">状态</label>
                     			<div class="am-u-sm-9">
-								<select name="searchpublish">
-									<option value="">是否发布</option>
+								<select name="searchpublish" data-am-selected="{searchBox: 1}" style="display: none;">
+									<option value="all" {% ifequal Qset.searchpublish "all" %}selected = "selected"{% endifequal %} >所有</option>
 									<option value="p" {% ifequal Qset.searchpublish "p" %}selected = "selected"{% endifequal %} >已发布</option>
 									<option value="d" {% ifequal Qset.searchpublish "d" %}selected = "selected"{% endifequal %} >已下架</option>
 								</select>
@@ -65,7 +65,7 @@
                                     </div>
                             </div>
 
-							<button class="btn btn-success" type="submit">搜索</button>
+							<button class="am-btn am-btn-primary am-btn-xs" type="submit">搜索</button>
 						</form>
 					</div>
 				</div>
@@ -77,9 +77,6 @@
                         <div class="widget am-cf">
                             <div class="widget-head am-cf">
                                 <div class="widget-title am-fl"><span>共有数据：<strong>{{ AllCount }}</strong> 条</span></div>
-                                <div class="widget-function am-fr">
-                                    <a href="javascript:;" class="am-icon-cog"></a>
-                                </div>
                             </div>
                             <div class="widget-body  widget-body-lg am-fr">
 
@@ -92,6 +89,7 @@
 											<th>资产类型</th>
 											<th>系统类型</th>
 											<th>产品名称</th>
+											<th>IP地址</th>
 											<th>创建时间</th>
 											<th>发布状态</th>
 											<th>操作</th>
@@ -100,24 +98,43 @@
                                     <tbody>
 									{% for i in AssetObjs %}
 										<tr class="text-c">
-											<td><input type="checkbox" value="{{ i.id }}" name="checkboxdel[]"></td>
+											<td><!-- <input type="checkbox" value="{{ i.id }}" name="checkboxdel[]"> --></td>
 											<td>{{ i.id }}</td>
 											<td>{{ i.asset_name }}</td>
 											<td>{{ i.asset_type }}</td>
 											<td>{{ i.system_type }}</td>
 											<td>{{ i.product }}</td>
+											<td>{{ i.ip }}</td>
 											<td>{{ i.timestamp|date:"Y-m-d H:i" }}</td>
 											{% ifequal i.status "p" %}
-											<td class="td-status"><span class="label label-success">已发布</span></td>
+											<td class="td-status"><span class="am-badge am-badge-primary">已发布</span></td>
 											{% else %}
-											<td class="td-status"><span class="label label-warning">已下架</span></td>
+											<td class="td-status"><span class="am-badge">已下架</span></td>
 											{% endifequal %}
 						                    <td>
 						                   	<div>
-						                   	<p>
-						                   	<a href="/assests/details/{{ i.id }}" class="am-btn am-btn-success am-btn-xs" role="button" target="_blank">详情</a>
-						                   	<button type="button" class="am-btn am-btn-danger am-btn-xs" data-toggle="modal" data-target="#myModal{{ i.id }}">删除</button>
-						                   	</p>
+						                   	<a href="/assets/details/{{ i.id }}" class="am-btn am-btn-success am-btn-xs" role="button" target="_blank">详情</a>
+						                   	<button type="button" class="am-btn am-btn-danger am-btn-xs" data-am-modal="{target: '#myModal{{ i.id }}',dimmer: false}">删除</button>
+						                   	<!-- 模态框 -->
+												<div class="am-modal am-modal-alert" tabindex="-1" id="myModal{{ i.id }}">
+												  <div class="am-modal-dialog">
+												    <div class="am-modal-hd" style="color:black;">
+												      删除资产编号为{{ i.id }}的资产？
+												    </div>
+												    <div class="am-modal-footer">
+												    <a href="/assets/del/{{ i.id　}}" class="am-btn">
+													确认
+								            		</a>
+												    </div>
+												    <div class="am-modal-footer">
+												      <span class="am-modal-btn">取消</span>
+												    </div>
+												  </div>
+												</div>
+						                   	<!-- 模态框结束 -->
+						                   	
+						                   	
+						                   	
 											</div>
 						                   </td>
 										</tr>
@@ -126,11 +143,10 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="pagediv"></ul>{{ PageInfo }}</ul></div>
                         </div>
                     </div>
                 </div>
-	</div>
+	</div><ul class="am-pagination tpl-pagination am-pagination-centered">{{ PageInfo }}</ul>
 </div>
 
 

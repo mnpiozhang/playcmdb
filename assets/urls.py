@@ -16,8 +16,10 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from .views import index
+from .views import index,delasset,details
 
 urlpatterns = [
-               url(r'index/', index),
+               url(r'index/(\d*)', index),
+               url(r'^del/(?P<id>\w+)/$',delasset),
+               url(r'^details/(?P<id>\w+)/$',details),
 ]

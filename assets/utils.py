@@ -3,7 +3,7 @@
 from django.utils.safestring import mark_safe
 import re
 import urllib
-
+from accounts.models import AuditInfo
 class Page:
     def __init__(self,AllCount,current_page,datanum=3):
         '''
@@ -44,11 +44,11 @@ def page_div(page,all_page_count,app,pageurl):
     #初始化页面分页为列表类型
     pagelist = []
     #分页逻辑判断，html标签的列表
-    pagelist.append("<a class='pure-button' href='/%s/%s/1'>首页</a>" %(app,pageurl))
+    pagelist.append("<li><a class='pure-button' href='/%s/%s/1'>首页</a></li>" %(app,pageurl))
     if page == 1:
-        pagelist.append("<a class='pure-button prev' href='#'>上一页</a>")
+        pagelist.append("<li><a href='#'>上一页</a></li>")
     else:
-        pagelist.append("<a  class='pure-button prev' href='/%s/%s/%d'>上一页</a>" %(app,pageurl,(page-1)))
+        pagelist.append("<li><a  class='pure-button prev' href='/%s/%s/%d'>上一页</a></li>" %(app,pageurl,(page-1)))
     
     
     #一次展示9个分页
@@ -68,16 +68,16 @@ def page_div(page,all_page_count,app,pageurl):
         end = page+4
     for i in range(begin,end):
         if page == i+1:
-            pagelist.append("<a class='pure-button' style='color:red;' href='/%s/%s/%d'>%d</a>" %(app,pageurl,i+1,i+1))
+            pagelist.append("<li><a class='pure-button' style='color:red;' href='/%s/%s/%d'>%d</a></li>" %(app,pageurl,i+1,i+1))
         else:
-            pagelist.append("<a class='pure-button' href='/%s/%s/%d'>%d</a>" %(app,pageurl,i+1,i+1))
+            pagelist.append("<li><a class='pure-button' href='/%s/%s/%d'>%d</a></li>" %(app,pageurl,i+1,i+1))
             
 
     if page == all_page_count:
-        pagelist.append("<a class='pure-button next' href='#'>下一页</a>")
+        pagelist.append("<li><a class='pure-button next' href='#'>下一页</a></li>")
     else:
-        pagelist.append("<a class='pure-button next' href='/%s/%s/%d'>下一页</a>" %(app,pageurl,(page+1)))
-    pagelist.append("<a class='pure-button' href='/%s/%s/%d'>尾页</a>" %(app,pageurl,all_page_count))
+        pagelist.append("<li><a class='pure-button next' href='/%s/%s/%d'>下一页</a></li>" %(app,pageurl,(page+1)))
+    pagelist.append("<li><a class='pure-button' href='/%s/%s/%d'>尾页</a></li>" %(app,pageurl,all_page_count))
     #将列表类型的页面转换成字符串并且转义html标签能在前台显示
     return mark_safe(' '.join(pagelist))
 
@@ -93,11 +93,11 @@ def query_page_div(page,all_page_count,app,pageurl,querycondition):
     #初始化页面分页为列表类型
     pagelist = []
     #分页逻辑判断，html标签的列表
-    pagelist.append("<a class='pure-button' href='/%s/%s/1?%s'>首页</a>" %(app,pageurl,querycondition))
+    pagelist.append("<li><a class='pure-button' href='/%s/%s/1?%s'>首页</a></li>" %(app,pageurl,querycondition))
     if page == 1:
-        pagelist.append("<a class='pure-button prev' href='#'>上一页</a>")
+        pagelist.append("<li><a class='pure-button prev' href='#'>上一页</a></li>")
     else:
-        pagelist.append("<a  class='pure-button prev' href='/%s/%s/%d?%s'>上一页</a>" %(app,pageurl,(page-1),querycondition))
+        pagelist.append("<li><a  class='pure-button prev' href='/%s/%s/%d?%s'>上一页</a></li>" %(app,pageurl,(page-1),querycondition))
     
     
     #一次展示9个分页
@@ -117,58 +117,55 @@ def query_page_div(page,all_page_count,app,pageurl,querycondition):
         end = page+4
     for i in range(begin,end):
         if page == i+1:
-            pagelist.append("<a class='pure-button' style='color:red;' href='/%s/%s/%d?%s'>%d</a>" %(app,pageurl,i+1,querycondition,i+1))
+            pagelist.append("<li><a class='pure-button' style='color:red;' href='/%s/%s/%d?%s'>%d</a></li>" %(app,pageurl,i+1,querycondition,i+1))
         else:
-            pagelist.append("<a class='pure-button' href='/%s/%s/%d?%s'>%d</a>" %(app,pageurl,i+1,querycondition,i+1))
+            pagelist.append("<li><a class='pure-button' href='/%s/%s/%d?%s'>%d</a></li>" %(app,pageurl,i+1,querycondition,i+1))
             
 
     if page == all_page_count:
-        pagelist.append("<a class='pure-button next' href='#'>下一页</a>")
+        pagelist.append("<li><a class='pure-button next' href='#'>下一页</a></li>")
     else:
-        pagelist.append("<a class='pure-button next' href='/%s/%s/%d?%s'>下一页</a>" %(app,pageurl,(page+1),querycondition))
-    pagelist.append("<a class='pure-button' href='/%s/%s/%d?%s'>尾页</a>" %(app,pageurl,all_page_count,querycondition))
+        pagelist.append("<li><a class='pure-button next' href='/%s/%s/%d?%s'>下一页</a></li>" %(app,pageurl,(page+1),querycondition))
+    pagelist.append("<li><a class='pure-button' href='/%s/%s/%d?%s'>尾页</a></li>" %(app,pageurl,all_page_count,querycondition))
     #将列表类型的页面转换成字符串并且转义html标签能在前台显示
     return mark_safe(' '.join(pagelist))
 
-def get_doc_page_info(DocumentModel,page=1,queryflag='n',querycondition=None):
-    '''
-    input 信息如下
-    DocumentModel是查询的整个基本信息表
-    page 当前所在页
-    queryflag 判断分页是否含有查询信息，如果该标记为字符n则是普通查询，是q则是含有查询条件的查询
+def audit_record_login(request):
+    user = request.session['username']
+    if request.META.has_key('HTTP_X_FORWARDED_FOR'):
+        remote_ip =  request.META['HTTP_X_FORWARDED_FOR']
+    else:  
+        remote_ip = request.META['REMOTE_ADDR']
+    operation = "login"
+    AuditInfo.objects.create(
+                             account = user,
+                             operation = operation,
+                             remote_ip = remote_ip
+                             )
     
-    return 一个字典，还有如下信息
-    AllCount:所有的对象数量
-    DocumentInfoObj:每一页显示的文档对象
-    PageInfo:下发分页栏的相关信息.如一共几页现在为第几页等等
-    '''
-    allDoc = DocumentModel.objects.all()
-    AllCount = allDoc.count()
-    #默认一页显示6条记录
-    PageObj = Page(AllCount,page,6)
-    DocumentInfoObj = allDoc[PageObj.begin:PageObj.end]
-    pageurl = 'index'
-    if queryflag == 'n':
-        pageinfo = page_div(page, PageObj.all_page_count,pageurl)
-    else:
-        if not querycondition:
-            raise NameError('error ! please input querycondition')
-        pageinfo = query_page_div(page, PageObj.all_page_count,pageurl,querycondition)
-    
-    return {'AllCount':AllCount,'DocumentInfoObj':DocumentInfoObj,'PageInfo':pageinfo}
+def audit_record_logout(request):
+    user = request.session['username']
+    if request.META.has_key('HTTP_X_FORWARDED_FOR'):
+        remote_ip =  request.META['HTTP_X_FORWARDED_FOR']
+    else:  
+        remote_ip = request.META['REMOTE_ADDR']
+    operation = "logout"
+    AuditInfo.objects.create(
+                             account = user,
+                             operation = operation,
+                             remote_ip = remote_ip
+                             )
 
-class filenameJudge(object):
-    def __init__(self,filename):
-        self.filename = filename
-    def suffix_judge(self):
-        suffix_txt = re.compile('\.txt$',flags=re.I)
-        suffix_word = re.compile('\.docx?$',flags=re.I)
-        suffix_pdf = re.compile('\.pdf$',flags=re.I)
-        if re.search(suffix_txt,self.filename):
-            return 'txt'
-        elif re.search(suffix_word,self.filename):
-            return 'word'
-        elif re.search(suffix_pdf,self.filename):
-            return 'pdf'
-        else:
-            return None
+def audit_record_del(request,assertname):
+    user = request.session['username']
+    if request.META.has_key('HTTP_X_FORWARDED_FOR'):
+        remote_ip =  request.META['HTTP_X_FORWARDED_FOR']
+    else:  
+        remote_ip = request.META['REMOTE_ADDR']
+    operation = "del"
+    AuditInfo.objects.create(
+                             account = user,
+                             operation = operation,
+                             remote_ip = remote_ip,
+                             target = assertname
+                             )
