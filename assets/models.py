@@ -3,6 +3,7 @@
 from django.db import models
 from business.models import BusinessInfo,ApplicationInfo
 
+#基础数据
 class AssetType(models.Model):
     #ex: server router switch or firewall...
     type_name = models.CharField(max_length = 60,verbose_name = u'固定资产类型名称')
@@ -15,9 +16,17 @@ class ServerRoom(models.Model):
     def __unicode__(self):
         return self.room_name
 
+#基础数据
 class SystemType(models.Model):
     #ex: centos6.8 redhat6.8 exsi cisco...
     type_name = models.CharField(max_length = 60,verbose_name = u'系统类型名称')
+    def __unicode__(self):
+        return self.type_name
+
+#基础数据
+class VirtualType(models.Model):
+    #ex: docker or virtualmachine
+    type_name = models.CharField(max_length = 60,verbose_name = u'虚拟设备类型名称')
     def __unicode__(self):
         return self.type_name
 
@@ -49,3 +58,22 @@ class AssetInfo(models.Model):
     status = models.CharField(max_length=1, choices=STATUS_CHOICES,default='d')
     def __unicode__(self):
         return self.asset_name
+    
+class VirtualMachineInfo(models.Model):
+    virtual_name = models.CharField(max_length = 40,unique=True,verbose_name = u'虚拟设备名称')
+    virtual_type = models.ForeignKey('VirtualType',verbose_name = u'虚拟设备类型')
+    machine_type = models.CharField(max_length = 40,verbose_name = u'虚拟设备位数')
+    timestamp = models.DateTimeField(auto_now_add = True,verbose_name = u'创建时间')
+    last_modified = models.DateTimeField(auto_now = True,verbose_name = u'最后修改时间')
+    ip = models.CharField(max_length = 20,unique=True,verbose_name = u'IP地址')
+    mac = models.CharField(max_length = 20,verbose_name = u'MAC地址')
+    memery_size = models.CharField(max_length = 20,verbose_name = u'内存')
+    cpu = models.CharField(max_length = 20,verbose_name = u'cpu型号')
+    cpu_cores = models.CharField(max_length = 10,verbose_name = u'cpucore数量')
+    cpu_pyhsical = models.CharField(max_length = 10,verbose_name = u'cpu物理数量')
+    business = models.ManyToManyField(BusinessInfo,related_name='virtual_business',verbose_name = u'归属的业务条线')
+    app = models.ManyToManyField(ApplicationInfo,related_name='virtual_application',verbose_name = u'部署的应用')
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES,default='d')
+    host = models.ForeignKey('AssetInfo',verbose_name = u'宿主机')
+    def __unicode__(self):
+        return self.virtual_name
