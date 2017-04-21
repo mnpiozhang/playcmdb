@@ -3,9 +3,11 @@
 from accounts.decorators import is_login_auth
 from django.shortcuts import render,render_to_response,HttpResponse,redirect
 import datetime
+from django.template.context_processors import csrf
 from .models import AssetInfo
 from django.db.models import Q
 from .utils import Page,page_div,query_page_div,audit_record_del
+from .forms import AssetForm
 from accounts.models import UserInfo,AuditInfo
 from django.template.context import RequestContext
 
@@ -85,7 +87,7 @@ def index(request,page=1):
             ret['UserInfoObj'] = UserInfoObj
             return render_to_response('assets/index.html',ret,context_instance=RequestContext(request))
     else:
-        return HttpResponse("this is a web page , please use metod GET")
+        return HttpResponse("this is a web page , please use method GET")
     
 #删除资产信息信息
 @is_login_auth
@@ -107,5 +109,33 @@ def details(request,id):
     ret['id'] = id
     return render_to_response('assets/details.html',ret)
     
-    
-    
+#提交新的资产信息
+@is_login_auth
+def submit_asset(request):
+    ret = {'AssetObj':None,'UserInfoObj':None}
+    UserInfoObj = UserInfo.objects.get(username=request.session.get('username',None))
+    ret['UserInfoObj'] = UserInfoObj
+    if request.method == 'POST':
+        AssetObj_form = AssetForm(request.POST)
+        print AssetObj_form
+        if AssetObj_form.is_valid():
+            AssetObj = AssetObj_form.save(commit=False)
+            #可以加写其他操作
+            
+            AssetObj.save()
+            ret['status'] = 'save ok'
+            
+        else:
+            ret['status'] = 'save error'
+            ret['form'] = AssetObj_form
+            #添加跨站请求伪造的认证
+            ret.update(csrf(request))
+            return render(request,'assets/submitasset.html',ret)
+            
+    AssetObj_form = AssetForm()
+    ret['form'] = AssetObj_form
+    #添加跨站请求伪造的认证
+    ret.update(csrf(request))
+    return render_to_response('assets/submitasset.html',ret)
+
+

@@ -1,0 +1,248 @@
+{% extends "suit/base.html" %}
+
+{% block content %}
+
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+        	<div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>资产管理 <span class="c-gray en">&gt;</span>资产信息<span class="c-gray en">&gt;</span>设备{{ AssetObj.id }}的详细信息</div>
+        </div>
+    </div>
+</div>
+
+<div class="row-content am-cf">
+
+                <div class="row am-cf">
+                
+                
+                    <div class="am-u-sm-12 am-u-md-12  am-u-lg-12">
+                    <form class="am-form tpl-form-line-form " action='/assets/newasset/' method='POST'>{% csrf_token %}
+                        <div class="widget am-cf">
+                        
+                            <div class="widget-head am-cf">
+                                <div class="widget-title am-fl">基本信息</div>
+                            </div>
+                            <div class="widget-body-lg widget-body am-fr" >
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">资产名称 <span class="tpl-form-line-small-title">asset name</span></label>
+                                        <div class="am-u-sm-9">
+											{{ form.asset_name }}
+						                    {% if form.errors %}
+						                    <small  style="color:red;">{{ form.errors.asset_name }}</small>
+						                    {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">资产类型 <span class="tpl-form-line-small-title">asset type</span></label>
+                                        <div class="am-u-sm-9">
+											{{ form.asset_type }}
+						                    {% if form.errors %}
+						                    <small  style="color:red;">{{ form.errors.asset_type }}</small>
+						                    {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">系统类型 <span class="tpl-form-line-small-title">system type</span></label>
+                                        <div class="am-u-sm-9">
+											{{ form.system_type }}
+						                    {% if form.errors %}
+						                    <small  style="color:red;">{{ form.errors.system_type }}</small>
+						                    {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">系统位数 <span class="tpl-form-line-small-title">machine type</span></label>
+                                        <div class="am-u-sm-9">
+											{{ form.machine_type }}
+						                    {% if form.errors %}
+						                    <small  style="color:red;">{{ form.errors.machine_type }}</small>
+						                    {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">产品名称 <span class="tpl-form-line-small-title">product</span></label>
+                                        <div class="am-u-sm-9">
+											{{ form.product }}
+						                    {% if form.errors %}
+						                    <small  style="color:red;">{{ form.errors.product }}</small>
+						                    {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">序列号 <span class="tpl-form-line-small-title">sn</span></label>
+                                        <div class="am-u-sm-9">
+											{{ form.serial_number }}
+						                    {% if form.errors %}
+						                    <small  style="color:red;">{{ form.errors.serial_number }}</small>
+						                    {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">MAC地址 <span class="tpl-form-line-small-title">mac</span></label>
+                                        <div class="am-u-sm-9">
+											{{ form.mac }}
+						                    {% if form.errors %}
+						                    <small  style="color:red;">{{ form.errors.mac }}</small>
+						                    {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">cpu型号 <span class="tpl-form-line-small-title">cpu</span></label>
+                                        <div class="am-u-sm-9">
+											{{ form.cpu }}
+						                    {% if form.errors %}
+						                    <small  style="color:red;">{{ form.errors.cpu }}</small>
+						                    {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">cpucore数量 <span class="tpl-form-line-small-title">cpu core</span></label>
+                                        <div class="am-u-sm-9">
+											{{ form.cpu_cores }}
+						                    {% if form.errors %}
+						                    <small  style="color:red;">{{ form.errors.cpu_cores }}</small>
+						                    {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">物理cpu数量 <span class="tpl-form-line-small-title">physical core</span></label>
+                                        <div class="am-u-sm-9">
+											{{ form.cpu_pyhsical }}
+						                    {% if form.errors %}
+						                    <small  style="color:red;">{{ form.errors.cpu_pyhsical }}</small>
+						                    {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">内存大小 <span class="tpl-form-line-small-title">memory</span></label>
+                                        <div class="am-u-sm-9">
+											{{ form.memery_size }}
+						                    {% if form.errors %}
+						                    <small  style="color:red;">{{ form.errors.memery_size }}</small>
+						                    {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">ip地址 <span class="tpl-form-line-small-title">ip address</span></label>
+                                        <div class="am-u-sm-9">
+											{{ form.ip }}
+						                    {% if form.errors %}
+						                    <small  style="color:red;">{{ form.errors.ip }}</small>
+						                    {% endif %}
+                                        </div>
+                                    </div>
+                            </div>
+                            
+                            
+                        </div>
+                        
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title am-fl">位置信息</div>
+                            </div>
+                            <div class="widget-body-md widget-body am-fr" >
+
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">所在机房 <span class="tpl-form-line-small-title">location</span></label>
+                                        <div class="am-u-sm-9">
+											{{ form.location }}
+						                    {% if form.errors %}
+						                    <small  style="color:red;">{{ form.errors.location }}</small>
+						                    {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">机架位置 <span class="tpl-form-line-small-title">rack</span></label>
+                                        <div class="am-u-sm-9">
+											{{ form.rack }}
+						                    {% if form.errors %}
+						                    <small  style="color:red;">{{ form.errors.rack }}</small>
+						                    {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">尺寸 <span class="tpl-form-line-small-title">size</span></label>
+                                        <div class="am-u-sm-9">
+											{{ form.size }}
+						                    {% if form.errors %}
+						                    <small  style="color:red;">{{ form.errors.size }}</small>
+						                    {% endif %}
+                                        </div>
+                                    </div>
+
+                            </div>
+                        </div>
+
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title am-fl">业务信息</div>
+                            </div>
+                            <div class="widget-body-lg widget-body am-fr" >
+
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">归属业务条线 <span class="tpl-form-line-small-title">business</span></label>
+                                        <div class="am-u-sm-9">
+											{{ form.business }}
+						                    {% if form.errors %}
+						                    <small  style="color:red;">{{ form.errors.business }}</small>
+						                    {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">部署的应用 <span class="tpl-form-line-small-title">application</span></label>
+                                        <div class="am-u-sm-9">
+											{{ form.app }}
+						                    {% if form.errors %}
+						                    <small  style="color:red;">{{ form.errors.app }}</small>
+						                    {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">使用状态 <span class="tpl-form-line-small-title">status</span></label>
+                                        <div class="am-u-sm-9">
+											{{ form.status }}
+						                    {% if form.errors %}
+						                    <small  style="color:red;">{{ form.errors.status }}</small>
+						                    {% endif %}
+                                        </div>
+                                    </div>
+
+                            </div>
+                        </div>
+                                    <div class="am-form-group">
+                                        <div class="am-u-sm-12 am-u-sm-push-12">
+                                        	<input type='submit' value='提交' class="am-btn am-btn-primary tpl-btn-bg-color-success " role="button"/>
+                                        </div>
+                                        <label style="color:red;">{{ status }}</label>  
+                                    </div>
+					</form>
+                    </div>
+
+
+                </div>
+
+</div>
+
+
+
+
+
+
+
+
+{% endblock %}

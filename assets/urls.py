@@ -16,10 +16,12 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from .views import index,delasset,details
+from .views import index,delasset,details,submit_asset
 
 urlpatterns = [
                url(r'index/(\d*)', index),
                url(r'^del/(?P<id>\w+)/$',delasset),
                url(r'^details/(?P<id>\w+)/$',details),
+               url(r'^newasset/$',submit_asset),
+               
 ]

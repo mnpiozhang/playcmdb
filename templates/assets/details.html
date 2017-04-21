@@ -13,6 +13,18 @@
 <div class="row-content am-cf">
 
                 <div class="row am-cf">
+                
+                                <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                                    <div class="am-form-group">
+                                        <div class="am-btn-toolbar">
+                                            <div class="am-btn-group am-btn-group-xs">
+                                            	<a href="/assets/newasset" class="am-btn am-btn-default am-btn-success" role="button" target="_blank"><span class="am-icon-plus"></span> 新增</a>
+                                                <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-save"></span> 修改</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                
                     <div class="am-u-sm-12 am-u-md-12  am-u-lg-8">
                         <div class="widget am-cf">
                             <div class="widget-head am-cf">
@@ -20,23 +32,55 @@
                             </div>
                             <div class="widget-body-lg widget-body am-fr" >
 							<ul class="am-list am-list-static">
-							  <li><label for="user-email" class="am-u-sm-3 am-form-label">资产名称</label>{{ AssetObj.asset_name }}</li>
+							  <li><label class="am-u-sm-3 am-form-label">资产名称</label>{{ AssetObj.asset_name }}</li>
 							  <li><label for="user-email" class="am-u-sm-3 am-form-label">资产类型</label>{{ AssetObj.asset_type }}</li>
 							  <li><label for="user-email" class="am-u-sm-3 am-form-label">系统类型</label>{{ AssetObj.system_type }}</li>
 							  <li><label for="user-email" class="am-u-sm-3 am-form-label">设备位数</label>{{ AssetObj.machine_type }}</li>
 							  <li><label for="user-email" class="am-u-sm-3 am-form-label">产品名称</label>{{ AssetObj.product }}</li>
 							  <li><label for="user-email" class="am-u-sm-3 am-form-label">序列号</label>{{ AssetObj.serial_number }}</li>
+							  <li><label for="user-email" class="am-u-sm-3 am-form-label">MAC地址</label>{{ AssetObj.mac }}</li>
+							  <li><label for="user-email" class="am-u-sm-3 am-form-label">CPU型号</label>{{ AssetObj.cpu }}</li>
+							  <li><label for="user-email" class="am-u-sm-3 am-form-label">CPU个数</label>{{ AssetObj.cpu_pyhsical }}</li>
+							  <li><label for="user-email" class="am-u-sm-3 am-form-label">内存</label>{{ AssetObj.memery_size }}</li>
+							  <li><label for="user-email" class="am-u-sm-3 am-form-label">IP地址</label>{{ AssetObj.ip }}</li>
+							</ul>
+                            </div>
+                        </div>
+                        
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title am-fl">位置信息</div>
+                            </div>
+                            <div class="widget-body-md widget-body am-fr" >
+							<ul class="am-list am-list-static">
 							  <li><label for="user-email" class="am-u-sm-3 am-form-label">所在机房</label>{{ AssetObj.location }}</li>
 							  <li><label for="user-email" class="am-u-sm-3 am-form-label">位置</label>{{ AssetObj.rack }}</li>
 							  <li><label for="user-email" class="am-u-sm-3 am-form-label">尺寸</label>{{ AssetObj.size }}</li>
+							</ul>
+                            </div>
+                        </div>
+
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title am-fl">业务信息</div>
+                            </div>
+                            <div class="widget-body-md widget-body am-fr" >
+							<ul class="am-list am-list-static">
 							  <li><label for="user-email" class="am-u-sm-3 am-form-label">业务条线</label>
 							  {% for i in AssetObj.business.all %}
+							  {{ i }},
+							  {% endfor %}
+							  </li>
+							  <li><label for="user-email" class="am-u-sm-3 am-form-label">部署应用</label>
+							  {% for i in AssetObj.app.all %}
 							  {{ i }},
 							  {% endfor %}
 							  </li>
 							</ul>
                             </div>
                         </div>
+
+
                     </div>
 
                     <div class="am-u-sm-12 am-u-md-12  am-u-lg-4">
