@@ -11,11 +11,16 @@ from .forms import AssetForm
 from accounts.models import UserInfo,AuditInfo
 from django.template.context import RequestContext
 
+###### asset info view#########
 # Create your views here.
 @is_login_auth
 def index(request,page=1):
     #return render(request, 'assets/index.html', {'a' : "asd"})
-    ret = {'AssetObjs':None,'UserInfoObj':None,'PageInfo':None,'AllCount':None}
+    ret = {'AssetObjs':None,'UserInfoObj':None,'PageInfo':None,'AllCount':None,'Side':None,'SideSub':None}
+    #### 边框信息点亮判断
+    ret['Side'] = 'asset'
+    ret['SideSub'] = 'index'
+    ####
     try:
         page = int(page)
     except Exception:
@@ -101,7 +106,10 @@ def delasset(request,id):
 #显示资产信息详情
 @is_login_auth
 def details(request,id):
-    ret = {'AssetObj':None,'UserInfoObj':None}
+    ret = {'AssetObj':None,'UserInfoObj':None,'Side':None,'SideSub':None}
+    #### 边框信息点亮判断
+    ret['Side'] = 'asset'
+    ret['SideSub'] = 'index'
     AssetObj = AssetInfo.objects.get(id=id)
     ret['AssetObj'] = AssetObj
     UserInfoObj = UserInfo.objects.get(username=request.session.get('username',None))
@@ -112,7 +120,10 @@ def details(request,id):
 #提交新的资产信息
 @is_login_auth
 def submit_asset(request):
-    ret = {'AssetObj':None,'UserInfoObj':None}
+    ret = {'AssetObj':None,'UserInfoObj':None,'Side':None,'SideSub':None}
+    #### 边框信息点亮判断
+    ret['Side'] = 'asset'
+    ret['SideSub'] = 'index'
     UserInfoObj = UserInfo.objects.get(username=request.session.get('username',None))
     ret['UserInfoObj'] = UserInfoObj
     if request.method == 'POST':
@@ -141,7 +152,10 @@ def submit_asset(request):
 #编辑资产信息
 @is_login_auth
 def edit_asset(request,id):
-    ret = {'AssetObj':None,'UserInfoObj':None}
+    ret = {'AssetObj':None,'UserInfoObj':None,'Side':None,'SideSub':None}
+    #### 边框信息点亮判断
+    ret['Side'] = 'asset'
+    ret['SideSub'] = 'index'
     AssetInfoObj = AssetInfo.objects.get(id=id)
     if request.method == 'POST':
         AssetInfoObj_form = AssetForm(data=request.POST,files=request.FILES,instance=AssetInfoObj)
@@ -172,3 +186,6 @@ def edit_asset(request,id):
     #添加跨站请求伪造的认证
     ret.update(csrf(request))
     return render_to_response('assets/edit_asset.html',ret)
+
+
+###### virtual info view#########
