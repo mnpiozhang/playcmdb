@@ -5,7 +5,7 @@
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-        	<div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>资产管理 <span class="c-gray en">&gt;</span>资产信息<span class="c-gray en">&gt;</span>添加新设备</div>
+        	<div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>资产管理 <span class="c-gray en">&gt;</span>资产信息<span class="c-gray en">&gt;</span>编辑设备{{ AssetObj.id }}</div>
         </div>
     </div>
 </div>
@@ -14,9 +14,18 @@
 
                 <div class="row am-cf">
                 
+                                <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                                    <div class="am-form-group">
+                                        <div class="am-btn-toolbar">
+                                            <div class="am-btn-group am-btn-group-xs">
+                                            	<a href="/assets/details/{{ AssetObj.id }}" class="am-btn am-btn-default am-btn-warning" role="button"><span class="am-icon-arrow-left"></span> 返回</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                 
                     <div class="am-u-sm-12 am-u-md-12  am-u-lg-12">
-                    <form class="am-form tpl-form-line-form " action='/assets/newasset/' method='POST'>{% csrf_token %}
+                    <form class="am-form tpl-form-line-form " action='/assets/editasset/{{ AssetObj.id }}/' method='POST'>{% csrf_token %}
                         <div class="widget am-cf">
                         
                             <div class="widget-head am-cf">

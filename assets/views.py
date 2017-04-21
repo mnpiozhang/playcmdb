@@ -6,7 +6,7 @@ import datetime
 from django.template.context_processors import csrf
 from .models import AssetInfo
 from django.db.models import Q
-from .utils import Page,page_div,query_page_div,audit_record_del
+from .utils import Page,page_div,query_page_div,audit_record_del,audit_record_create,audit_record_change
 from .forms import AssetForm
 from accounts.models import UserInfo,AuditInfo
 from django.template.context import RequestContext
@@ -120,8 +120,8 @@ def submit_asset(request):
         print AssetObj_form
         if AssetObj_form.is_valid():
             AssetObj = AssetObj_form.save(commit=False)
-            #可以加写其他操作
-            
+            #添加记录审计,可以加一些其他操作
+            audit_record_create(request,AssetObj.asset_name)
             AssetObj.save()
             ret['status'] = 'save ok'
             
@@ -138,4 +138,37 @@ def submit_asset(request):
     ret.update(csrf(request))
     return render_to_response('assets/submitasset.html',ret)
 
-
+#编辑资产信息
+@is_login_auth
+def edit_asset(request,id):
+    ret = {'AssetObj':None,'UserInfoObj':None}
+    AssetInfoObj = AssetInfo.objects.get(id=id)
+    if request.method == 'POST':
+        AssetInfoObj_form = AssetForm(data=request.POST,files=request.FILES,instance=AssetInfoObj)
+        #print request.POST
+        #print request.FILES['attachment'].name
+        #print DocumentInfoObj.attachment
+        #print str(DocumentInfoObj.attachment)
+        #print DocumentInfoObj_form.attachment
+        if AssetInfoObj_form.is_valid():
+            AssetObj = AssetInfoObj_form.save(commit=False)
+            #索引状态放置为b即开始索引
+            audit_record_change(request,AssetObj.asset_name)
+            AssetObj.save()
+            ret['status'] = '修改成功'
+        else:
+            ret['status'] = '修改失败'
+            ret['form'] = AssetInfoObj_form
+            #添加跨站请求伪造的认证
+            ret.update(csrf(request))
+            return render(request,'assets/edit_asset.html',ret)
+            
+    AssetInfoObj_form = AssetForm(instance=AssetInfoObj)
+    UserInfoObj = UserInfo.objects.get(username=request.session.get('username',None))
+    ret['UserInfoObj'] = UserInfoObj
+    ret['form'] = AssetInfoObj_form
+    ret['id'] = id
+    ret['AssetObj'] = AssetInfoObj
+    #添加跨站请求伪造的认证
+    ret.update(csrf(request))
+    return render_to_response('assets/edit_asset.html',ret)

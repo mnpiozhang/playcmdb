@@ -169,3 +169,31 @@ def audit_record_del(request,assertname):
                              remote_ip = remote_ip,
                              target = assertname
                              )
+    
+def audit_record_create(request,assertname):
+    user = request.session['username']
+    if request.META.has_key('HTTP_X_FORWARDED_FOR'):
+        remote_ip =  request.META['HTTP_X_FORWARDED_FOR']
+    else:  
+        remote_ip = request.META['REMOTE_ADDR']
+    operation = "create"
+    AuditInfo.objects.create(
+                             account = user,
+                             operation = operation,
+                             remote_ip = remote_ip,
+                             target = assertname
+                             )
+    
+def audit_record_change(request,assertname):
+    user = request.session['username']
+    if request.META.has_key('HTTP_X_FORWARDED_FOR'):
+        remote_ip =  request.META['HTTP_X_FORWARDED_FOR']
+    else:  
+        remote_ip = request.META['REMOTE_ADDR']
+    operation = "change"
+    AuditInfo.objects.create(
+                             account = user,
+                             operation = operation,
+                             remote_ip = remote_ip,
+                             target = assertname
+                             )
