@@ -16,13 +16,15 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from .views import index,delasset,details,submit_asset,edit_asset
+from .views import index,delasset,details,submit_asset,edit_asset,virtual_index,submit_virtual,delvirtual
 
 urlpatterns = [
-               url(r'index/(\d*)', index),
+               url(r'^index/(\d*)', index),
+               url(r'^virtual/(\d*)', virtual_index),
                url(r'^del/(?P<id>\w+)/$',delasset),
+               url(r'^del_vm/(?P<id>\w+)/$',delvirtual),
                url(r'^details/(?P<id>\w+)/$',details),
                url(r'^editasset/(?P<id>\w+)/$',edit_asset),
                url(r'^newasset/$',submit_asset),
-               
+               url(r'^newvirtual/$',submit_virtual),
 ]

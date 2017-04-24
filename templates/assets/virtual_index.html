@@ -1,0 +1,172 @@
+{% extends "suit/base.html" %}
+
+{% block content %}
+
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+        	<div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>资产管理 <span class="c-gray en">&gt;</span>虚拟化信息</div>
+        </div>
+    </div>
+
+	<div class="row-content am-cf">
+		<div class="row">
+		
+           <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+               <div class="am-form-group">
+                   <div class="am-btn-toolbar">
+                       <div class="am-btn-group am-btn-group-xs">
+                       	<a href="/assets/newvirtual" class="am-btn am-btn-default am-btn-success" role="button" target="_blank"><span class="am-icon-plus"></span> 新增</a>
+                       </div>
+                   </div>
+               </div>
+           </div>
+		
+			<div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+				<div class="widget am-cf">
+	                <div class="widget-head am-cf">
+	                    <div class="widget-title am-fl">条件查询</div>
+	                </div>
+                   	<div class="widget-body am-fr">
+                   		<form class="am-form tpl-form-line-form " action='/assets/virtual/' method='GET'>
+							<input type="hidden" name="issearch" value=1>
+                    		<div class="am-form-group ">
+                    			<label class="am-u-sm-3 am-form-label">状态</label>
+                    			<div class="am-u-sm-9">
+								<select name="searchpublish" data-am-selected="{searchBox: 1}" style="display: none;">
+									<option value="all" {% ifequal Qset.searchpublish "all" %}selected = "selected"{% endifequal %} >所有</option>
+									<option value="p" {% ifequal Qset.searchpublish "p" %}selected = "selected"{% endifequal %} >已发布</option>
+									<option value="d" {% ifequal Qset.searchpublish "d" %}selected = "selected"{% endifequal %} >已下架</option>
+								</select>
+								</div>
+                    		</div>
+
+                               <div class="am-form-group am-u-sm-6">
+                                   <label class="am-u-sm-3 am-form-label">虚拟化设备名称</label>
+                                   <div class="am-u-sm-9">
+                                       <input type="text" name="searchvirtual"  placeholder="根据虚拟化设备名" value="{{ Qset.searchvirtual }}">
+                                   </div>
+                               </div>
+
+                               <div class="am-form-group am-u-sm-6">
+                                   <label class="am-u-sm-3 am-form-label">IP地址</label>
+                                   <div class="am-u-sm-9">
+                                       <input type="text" name="searchip"  placeholder="根据ip" value="{{ Qset.searchip }}">
+                                   </div>
+                               </div>
+
+							<div class="am-form-group am-u-sm-6">
+                                    <label for="user-email" class="am-u-sm-3 am-form-label">开始时间</label>
+                                    <div class="am-u-sm-9">
+                                        <input type="text" name="searchstarttime" class="am-form-field tpl-form-no-bg" placeholder="开始时间" data-am-datepicker="" value="{{ Qset.tmpstarttime }}" readonly="">
+                                    </div>
+                            </div>
+                   		
+							<div class="am-form-group am-u-sm-6">
+                                    <label for="user-email" class="am-u-sm-3 am-form-label">结束时间</label>
+                                    <div class="am-u-sm-9">
+                                        <input type="text" name="searchendtime" class="am-form-field tpl-form-no-bg" placeholder="结束时间" data-am-datepicker="" value="{{ Qset.tmpendtime }}" readonly="">
+                                    </div>
+                            </div>
+
+							<button class="am-btn am-btn-primary am-btn-xs" type="submit">搜索</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+                <div class="row">
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title am-fl"><span>共有数据：<strong>{{ AllCount }}</strong> 条</span></div>
+                            </div>
+                            <div class="widget-body  widget-body-lg am-fr">
+
+                                <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                                    <thead>
+                                        <tr>
+											<th></th>
+											<th>ID</th>
+											<th>虚拟化实例名</th>
+											<th>虚拟设备类型</th>
+											<th>IP地址</th>
+											<th>宿主机</th>
+											<th>创建时间</th>
+											<th>发布状态</th>
+											<th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+									{% for i in VirtualObjs %}
+										<tr class="text-c">
+											<td><!-- <input type="checkbox" value="{{ i.id }}" name="checkboxdel[]"> --></td>
+											<td>{{ i.id }}</td>
+											<td>{{ i.virtual_name }}</td>
+											<td>{{ i.virtual_type }}</td>
+											<td>{{ i.ip }}</td>
+											<td>{{ i.host }}</td>
+											<td>{{ i.timestamp|date:"Y-m-d H:i" }}</td>
+											{% ifequal i.status "p" %}
+											<td class="td-status"><span class="am-badge am-badge-primary">已发布</span></td>
+											{% else %}
+											<td class="td-status"><span class="am-badge">已下架</span></td>
+											{% endifequal %}
+						                    <td>
+						                   	<div>
+						                   	<a href="/assets/details/{{ i.id }}" class="am-btn am-btn-success am-btn-xs" role="button" target="_blank">详情</a>
+						                   	<button type="button" class="am-btn am-btn-danger am-btn-xs" data-am-modal="{target: '#myModal{{ i.id }}',dimmer: false}">删除</button>
+						                   	<!-- 模态框 -->
+												<div class="am-modal am-modal-alert" tabindex="-1" id="myModal{{ i.id }}">
+												  <div class="am-modal-dialog">
+												    <div class="am-modal-hd" style="color:black;">
+												      删除编号为{{ i.id }}的虚拟设备？
+												    </div>
+												    <div class="am-modal-footer">
+												    <a href="/assets/del_vm/{{ i.id　}}" class="am-btn">
+													确认
+								            		</a>
+												    </div>
+												    <div class="am-modal-footer">
+												      <span class="am-modal-btn">取消</span>
+												    </div>
+												  </div>
+												</div>
+						                   	<!-- 模态框结束 -->
+						                   	
+						                   	
+						                   	
+											</div>
+						                   </td>
+										</tr>
+									{% endfor %}
+                                        <!-- more data -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+	</div><ul class="am-pagination tpl-pagination am-pagination-centered">{{ PageInfo }}</ul>
+</div>
+
+
+{% if popover %}
+<div id="myPopover" class="alert alert-warning">
+	<a href="#" class="close" data-dismiss="alert">&times;</a>
+	{% if popover.id %}
+	<strong>成功！</strong>删除了主机{{ popover.id }}
+	{% else %}
+	<strong>抱歉！</strong>{{ popover.info }}
+	{% endif %}
+</div>
+<script type="text/javascript">
+$(document).ready(function(){ 
+	setTimeout(function(){alert("{{ popover.info }}{{ popover.id }}");},10);  
+}); 
+</script>  
+{% endif %}
+
+
+{% endblock %}

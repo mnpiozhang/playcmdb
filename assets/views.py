@@ -4,10 +4,10 @@ from accounts.decorators import is_login_auth
 from django.shortcuts import render,render_to_response,HttpResponse,redirect
 import datetime
 from django.template.context_processors import csrf
-from .models import AssetInfo
+from .models import AssetInfo,VirtualMachineInfo
 from django.db.models import Q
 from .utils import Page,page_div,query_page_div,audit_record_del,audit_record_create,audit_record_change
-from .forms import AssetForm
+from .forms import AssetForm,VirtualForm
 from accounts.models import UserInfo,AuditInfo
 from django.template.context import RequestContext
 
@@ -45,7 +45,7 @@ def index(request,page=1):
             Qset['searchip'] = searchip
             Qset['tmpstarttime'] = tmpstarttime
             Qset['tmpendtime'] = tmpendtime
-            print Qset
+            #print Qset
             #判断是否输入了开始时间，没输入或输入非法则默认为1970.01.01
             try:
                 searchstarttime = datetime.datetime.strptime(tmpstarttime,'%Y-%m-%d')
@@ -128,7 +128,7 @@ def submit_asset(request):
     ret['UserInfoObj'] = UserInfoObj
     if request.method == 'POST':
         AssetObj_form = AssetForm(request.POST)
-        print AssetObj_form
+        #print AssetObj_form
         if AssetObj_form.is_valid():
             AssetObj = AssetObj_form.save(commit=False)
             #添加记录审计,可以加一些其他操作
@@ -189,3 +189,122 @@ def edit_asset(request,id):
 
 
 ###### virtual info view#########
+
+@is_login_auth
+def virtual_index(request,page=1):
+    ret = {'VirtualObjs':None,'UserInfoObj':None,'PageInfo':None,'AllCount':None,'Side':None,'SideSub':None}
+    #### 边框信息点亮判断
+    ret['Side'] = 'asset'
+    ret['SideSub'] = 'virtual'
+    ####
+    try:
+        page = int(page)
+    except Exception:
+        page = 1
+    if request.method == 'GET':
+        #查询页面的分页显示
+        if request.GET.get('issearch',None):
+            searchvirtual = request.GET.get('searchvirtual',None)
+            searchpublish = request.GET.get('searchpublish',None)
+            searchip = request.GET.get('searchip',None)
+            tmpstarttime = request.GET.get('searchstarttime',None)
+            tmpendtime = request.GET.get('searchendtime',None)
+            Qset = {}
+            Qset['searchvirtual'] = searchvirtual
+            Qset['searchpublish'] = searchpublish
+            if searchpublish == "all":
+                tmpstatus = ""
+            else:
+                tmpstatus = searchpublish
+            Qset['searchip'] = searchip
+            Qset['tmpstarttime'] = tmpstarttime
+            Qset['tmpendtime'] = tmpendtime
+            #print Qset
+            #判断是否输入了开始时间，没输入或输入非法则默认为1970.01.01
+            try:
+                searchstarttime = datetime.datetime.strptime(tmpstarttime,'%Y-%m-%d')
+            except:
+                searchstarttime = datetime.datetime(1970, 1, 1)
+            #判断是否输入了结束时间或输入非法，没输入或输入非法则默认为现在
+            try:
+                searchendtime = datetime.datetime.strptime(tmpendtime,'%Y-%m-%d')
+            except:
+                searchendtime = datetime.datetime.now()
+            allVirtual = VirtualMachineInfo.objects.filter(Q(ip__contains=searchip)
+                                                         &Q(virtual_name__contains=searchvirtual)
+                                                         &Q(status__contains=tmpstatus)
+                                                         &Q(timestamp__gte=searchstarttime)
+                                                         &Q(timestamp__lte=searchendtime))
+            AllCount = allVirtual.count()
+            ret['AllCount'] = AllCount
+            PageObj = Page(AllCount,page,6)
+            VirtualObjs = allVirtual[PageObj.begin:PageObj.end]
+            pageurl = 'virtual'
+            app = 'assets'
+            querycondition = request.META.get("QUERY_STRING",None)
+            pageinfo = query_page_div(page, PageObj.all_page_count,app,pageurl,querycondition)
+            ret['PageInfo'] = pageinfo
+            ret['VirtualObjs'] = VirtualObjs
+            UserInfoObj = UserInfo.objects.get(username=request.session.get('username',None))
+            ret['UserInfoObj'] = UserInfoObj
+            ret['Qset'] = Qset
+            return render_to_response('assets/virtual_index.html',ret,context_instance=RequestContext(request))
+        #正常主页的分页显示
+        else:
+            allVirtual = VirtualMachineInfo.objects.all()
+            AllCount = allVirtual.count()
+            ret['AllCount'] = AllCount
+            PageObj = Page(AllCount,page,6)
+            VirtualObjs = allVirtual[PageObj.begin:PageObj.end]
+            pageurl = 'virtual'
+            app = 'assets'
+            pageinfo = page_div(page, PageObj.all_page_count,app,pageurl)
+            ret['PageInfo'] = pageinfo
+            ret['VirtualObjs'] = VirtualObjs
+            UserInfoObj = UserInfo.objects.get(username=request.session.get('username',None))
+            ret['UserInfoObj'] = UserInfoObj
+            return render_to_response('assets/virtual_index.html',ret,context_instance=RequestContext(request))
+    else:
+        return HttpResponse("this is a web page , please use method GET")
+    
+    
+#提交新的虚拟化信息
+@is_login_auth
+def submit_virtual(request):
+    ret = {'VirtualObj':None,'UserInfoObj':None,'Side':None,'SideSub':None}
+    #### 边框信息点亮判断
+    ret['Side'] = 'virtual'
+    ret['SideSub'] = 'index'
+    #print "12312"
+    UserInfoObj = UserInfo.objects.get(username=request.session.get('username',None))
+    ret['UserInfoObj'] = UserInfoObj
+    if request.method == 'POST':
+        VirtualObj_form = VirtualForm(request.POST)
+        #print VirtualObj_form
+        if VirtualObj_form.is_valid():
+            VirtualObj = VirtualObj_form.save(commit=False)
+            #添加记录审计,可以加一些其他操作
+            audit_record_create(request,VirtualObj.virtual_name)
+            VirtualObj.save()
+            ret['status'] = 'save ok'
+            
+        else:
+            ret['status'] = 'save error'
+            ret['form'] = VirtualObj_form
+            #添加跨站请求伪造的认证
+            ret.update(csrf(request))
+            return render(request,'assets/submitvirtual.html',ret)
+            
+    VirtualObj_form = VirtualForm()
+    ret['form'] = VirtualObj_form
+    #添加跨站请求伪造的认证
+    ret.update(csrf(request))
+    return render_to_response('assets/submitvirtual.html',ret)
+
+#删除虚拟化信息
+@is_login_auth
+def delvirtual(request,id):
+    VirtualObj = VirtualMachineInfo.objects.get(id=id)
+    audit_record_del(request,VirtualObj.virtual_name)
+    VirtualObj.delete()
+    return redirect("/assets/virtual/")
