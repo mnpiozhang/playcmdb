@@ -355,7 +355,7 @@ def edit_vm(request,id):
             ret['VirtualObj'] = VirtualInfoObj
             #添加跨站请求伪造的认证
             ret.update(csrf(request))
-            return render(request,'assets/edit_asset.html',ret)
+            return render(request,'assets/edit_vm.html',ret)
             
     VirtualInfoObj_form = VirtualForm(instance=VirtualInfoObj)
     UserInfoObj = UserInfo.objects.get(username=request.session.get('username',None))
@@ -463,7 +463,7 @@ def edit_dc(request,id):
             ret['DCObj'] = DCInfoObj
             #添加跨站请求伪造的认证
             ret.update(csrf(request))
-            return render(request,'assets/edit_asset.html',ret)
+            return render(request,'assets/edit_dc.html',ret)
             
     DCInfoObj_form = ServerRoomForm(instance=DCInfoObj)
     UserInfoObj = UserInfo.objects.get(username=request.session.get('username',None))
