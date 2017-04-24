@@ -5,7 +5,7 @@
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-        	<div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>资产管理 <span class="c-gray en">&gt;</span>虚拟化信息<span class="c-gray en">&gt;</span>添加新虚拟化设备</div>
+        	<div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>资产管理 <span class="c-gray en">&gt;</span>虚拟化信息<span class="c-gray en">&gt;</span>编辑虚拟设备{{ VirtualObj.id }}</div>
         </div>
     </div>
 </div>
@@ -14,9 +14,18 @@
 
                 <div class="row am-cf">
                 
+                                <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                                    <div class="am-form-group">
+                                        <div class="am-btn-toolbar">
+                                            <div class="am-btn-group am-btn-group-xs">
+                                            	<a href="/assets/details_vm/{{ VirtualObj.id }}" class="am-btn am-btn-default am-btn-warning" role="button"><span class="am-icon-arrow-left"></span> 返回</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                 
                     <div class="am-u-sm-12 am-u-md-12  am-u-lg-12">
-                    <form class="am-form tpl-form-line-form " action='/assets/newvirtual/' method='POST'>{% csrf_token %}
+                    <form class="am-form tpl-form-line-form " action='/assets/editvm/{{ VirtualObj.id }}/' method='POST'>{% csrf_token %}
                         <div class="widget am-cf">
                         
                             <div class="widget-head am-cf">
@@ -24,7 +33,7 @@
                             </div>
                             <div class="widget-body-lg widget-body am-fr" >
                                     <div class="am-form-group">
-                                        <label for="user-name" class="am-u-sm-3 am-form-label">虚拟化设备名称 <span class="tpl-form-line-small-title">asset name</span></label>
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">资产名称 <span class="tpl-form-line-small-title">vm name</span></label>
                                         <div class="am-u-sm-9">
 											{{ form.virtual_name }}
 						                    {% if form.errors %}
@@ -34,7 +43,7 @@
                                     </div>
                                     
                                     <div class="am-form-group">
-                                        <label for="user-name" class="am-u-sm-3 am-form-label">虚拟化类型 <span class="tpl-form-line-small-title">asset type</span></label>
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">虚拟化类型 <span class="tpl-form-line-small-title">vm type</span></label>
                                         <div class="am-u-sm-9">
 											{{ form.virtual_type }}
 						                    {% if form.errors %}
@@ -61,16 +70,6 @@
 											{{ form.mac }}
 						                    {% if form.errors %}
 						                    <small  style="color:red;">{{ form.errors.mac }}</small>
-						                    {% endif %}
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="am-form-group">
-                                        <label for="user-name" class="am-u-sm-3 am-form-label">内存大小 <span class="tpl-form-line-small-title">memory</span></label>
-                                        <div class="am-u-sm-9">
-											{{ form.memery_size }}
-						                    {% if form.errors %}
-						                    <small  style="color:red;">{{ form.errors.memery_size }}</small>
 						                    {% endif %}
                                         </div>
                                     </div>
@@ -105,6 +104,15 @@
                                         </div>
                                     </div>
                                     
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">内存大小 <span class="tpl-form-line-small-title">memory</span></label>
+                                        <div class="am-u-sm-9">
+											{{ form.memery_size }}
+						                    {% if form.errors %}
+						                    <small  style="color:red;">{{ form.errors.memery_size }}</small>
+						                    {% endif %}
+                                        </div>
+                                    </div>
                                     
                                     <div class="am-form-group">
                                         <label for="user-name" class="am-u-sm-3 am-form-label">ip地址 <span class="tpl-form-line-small-title">ip address</span></label>
@@ -116,6 +124,8 @@
                                         </div>
                                     </div>
                             </div>
+                            
+                            
                         </div>
                         
 
@@ -164,7 +174,6 @@
 						                    {% endif %}
                                         </div>
                                     </div>
-
 
                             </div>
                         </div>

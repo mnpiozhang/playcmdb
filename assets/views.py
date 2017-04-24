@@ -166,6 +166,7 @@ def edit_asset(request,id):
         if AssetInfoObj_form.is_valid():
             AssetObj = AssetInfoObj_form.save()
             #AssetObj = AssetInfoObj_form.save(commit=False)
+            #print AssetObj.app
             #索引状态放置为b即开始索引
             audit_record_change(request,AssetObj.asset_name)
             #AssetObj.save()
@@ -173,6 +174,7 @@ def edit_asset(request,id):
         else:
             ret['status'] = '修改失败'
             ret['form'] = AssetInfoObj_form
+            ret['AssetObj'] = AssetInfoObj
             #添加跨站请求伪造的认证
             ret.update(csrf(request))
             return render(request,'assets/edit_asset.html',ret)
@@ -273,8 +275,8 @@ def virtual_index(request,page=1):
 def submit_virtual(request):
     ret = {'VirtualObj':None,'UserInfoObj':None,'Side':None,'SideSub':None}
     #### 边框信息点亮判断
-    ret['Side'] = 'virtual'
-    ret['SideSub'] = 'index'
+    ret['Side'] = 'asset'
+    ret['SideSub'] = 'virtual'
     #print "12312"
     UserInfoObj = UserInfo.objects.get(username=request.session.get('username',None))
     ret['UserInfoObj'] = UserInfoObj
@@ -307,3 +309,58 @@ def delvirtual(request,id):
     audit_record_del(request,VirtualObj.virtual_name)
     VirtualObj.delete()
     return redirect("/assets/virtual/")
+
+#显示资产信息详情
+@is_login_auth
+def details_vm(request,id):
+    ret = {'VirtualObj':None,'UserInfoObj':None,'Side':None,'SideSub':None}
+    #### 边框信息点亮判断
+    ret['Side'] = 'asset'
+    ret['SideSub'] = 'virtual'
+    VirtualObj = VirtualMachineInfo.objects.get(id=id)
+    ret['VirtualObj'] = VirtualObj
+    UserInfoObj = UserInfo.objects.get(username=request.session.get('username',None))
+    ret['UserInfoObj'] = UserInfoObj
+    ret['id'] = id
+    return render_to_response('assets/virtual_details.html',ret)
+
+#编辑虚拟化信息
+@is_login_auth
+def edit_vm(request,id):
+    ret = {'VirtualObj':None,'UserInfoObj':None,'Side':None,'SideSub':None}
+    #### 边框信息点亮判断
+    ret['Side'] = 'asset'
+    ret['SideSub'] = 'virtual'
+    VirtualInfoObj = VirtualMachineInfo.objects.get(id=id)
+    if request.method == 'POST':
+        VirtualInfoObj_form = VirtualForm(data=request.POST,files=request.FILES,instance=VirtualInfoObj)
+        #print request.POST
+        #print request.FILES['attachment'].name
+        #print DocumentInfoObj.attachment
+        #print str(DocumentInfoObj.attachment)
+        #print DocumentInfoObj_form.attachment
+        if VirtualInfoObj_form.is_valid():
+            VirtualObj = VirtualInfoObj_form.save()
+            #AssetObj = AssetInfoObj_form.save(commit=False)
+            #print AssetObj.app
+            #索引状态放置为b即开始索引
+            audit_record_change(request,VirtualObj.virtual_name)
+            #AssetObj.save()
+            ret['status'] = '修改成功'
+        else:
+            ret['status'] = '修改失败'
+            ret['form'] = VirtualInfoObj_form
+            ret['VirtualObj'] = VirtualInfoObj
+            #添加跨站请求伪造的认证
+            ret.update(csrf(request))
+            return render(request,'assets/edit_asset.html',ret)
+            
+    VirtualInfoObj_form = VirtualForm(instance=VirtualInfoObj)
+    UserInfoObj = UserInfo.objects.get(username=request.session.get('username',None))
+    ret['UserInfoObj'] = UserInfoObj
+    ret['form'] = VirtualInfoObj_form
+    ret['id'] = id
+    ret['VirtualObj'] = VirtualInfoObj
+    #添加跨站请求伪造的认证
+    ret.update(csrf(request))
+    return render_to_response('assets/edit_vm.html',ret)
