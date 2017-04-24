@@ -13,6 +13,7 @@ class AssetType(models.Model):
 class ServerRoom(models.Model):
     room_name = models.CharField(max_length=50,verbose_name = u'机房名称')
     address = models.CharField(max_length=60,verbose_name = u'机房地址')
+    phone = models.CharField(max_length=20,verbose_name = u'机房地址')
     def __unicode__(self):
         return self.room_name
 

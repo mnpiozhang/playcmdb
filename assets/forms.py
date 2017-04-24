@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 from django import forms
-from .models import AssetInfo,VirtualMachineInfo,BusinessInfo,ApplicationInfo
+from .models import AssetInfo,VirtualMachineInfo,BusinessInfo,ApplicationInfo,ServerRoom
 from django.contrib.admin import widgets
 
 
@@ -75,4 +75,23 @@ class VirtualForm(forms.models.ModelForm):
                           'virtual_name' :{'required':'请输入文档名称'},
                           'virtual_type' :{'required':'请简要填写文档描述，并作为第一搜索依据'},
                           'machine_type': {'required':'请选择一个文档类型'},
+                          }
+        
+class ServerRoomForm(forms.models.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(ServerRoomForm,self).__init__(*args, **kwargs)
+
+    class Meta:
+        model = ServerRoom
+        fields = ('room_name','address','phone')
+        widgets = {
+                   'room_name' : forms.TextInput(attrs={'id':'user-name','class':'tpl-form-input','placeholder':'机房名称'}),
+                   'phone' : forms.TextInput(attrs={'placeholder':'联系电话'}),
+                   'address' : forms.TextInput(attrs={'placeholder':'地址'}),
+                   }
+        error_messages = {
+                          'room_name' :{'required':'请输入机房名称'},
+                          'phone' :{'required':'请输入联系电话'},
+                          'address': {'required':'请输入地址'},
                           }

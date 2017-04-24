@@ -1,0 +1,89 @@
+{% extends "suit/base.html" %}
+
+{% block content %}
+
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+        	<div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>资产管理 <span class="c-gray en">&gt;</span>机房信息<span class="c-gray en">&gt;</span>编辑机房{{ DCObj.room_name }}</div>
+        </div>
+    </div>
+</div>
+
+<div class="row-content am-cf">
+
+                <div class="row am-cf">
+                
+                                <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                                    <div class="am-form-group">
+                                        <div class="am-btn-toolbar">
+                                            <div class="am-btn-group am-btn-group-xs">
+                                            	<a href="/assets/details_dc/{{ DCObj.id }}" class="am-btn am-btn-default am-btn-warning" role="button"><span class="am-icon-arrow-left"></span> 返回</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                
+                    <div class="am-u-sm-12 am-u-md-12  am-u-lg-12">
+                    <form class="am-form tpl-form-line-form " action='/assets/editdc/{{ DCObj.id }}/' method='POST'>{% csrf_token %}
+                        <div class="widget am-cf">
+                        
+                            <div class="widget-head am-cf">
+                                <div class="widget-title am-fl">基本信息</div>
+                            </div>
+                            <div class="widget-body-lg widget-body am-fr" >
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">机房名称 <span class="tpl-form-line-small-title">dc name</span></label>
+                                        <div class="am-u-sm-9">
+											{{ form.room_name }}
+						                    {% if form.errors %}
+						                    <small  style="color:red;">{{ form.errors.room_name }}</small>
+						                    {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">地址 <span class="tpl-form-line-small-title">address</span></label>
+                                        <div class="am-u-sm-9">
+											{{ form.address }}
+						                    {% if form.errors %}
+						                    <small  style="color:red;">{{ form.errors.address }}</small>
+						                    {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">联系电话 <span class="tpl-form-line-small-title">phone</span></label>
+                                        <div class="am-u-sm-9">
+											{{ form.phone }}
+						                    {% if form.errors %}
+						                    <small  style="color:red;">{{ form.errors.phone }}</small>
+						                    {% endif %}
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                        
+                                    <div class="am-form-group">
+                                        <div class="am-u-sm-12 am-u-sm-push-12">
+                                        	<input type='submit' value='提交' class="am-btn am-btn-primary tpl-btn-bg-color-success " role="button"/>
+                                        </div>
+                                        <label style="color:red;">{{ status }}</label>  
+                                    </div>
+					</form>
+                    </div>
+
+
+                </div>
+
+</div>
+
+
+
+
+
+
+
+
+{% endblock %}

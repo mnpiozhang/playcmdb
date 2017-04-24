@@ -4,10 +4,10 @@ from accounts.decorators import is_login_auth
 from django.shortcuts import render,render_to_response,HttpResponse,redirect
 import datetime
 from django.template.context_processors import csrf
-from .models import AssetInfo,VirtualMachineInfo
+from .models import AssetInfo,VirtualMachineInfo,ServerRoom
 from django.db.models import Q
 from .utils import Page,page_div,query_page_div,audit_record_del,audit_record_create,audit_record_change
-from .forms import AssetForm,VirtualForm
+from .forms import AssetForm,VirtualForm,ServerRoomForm
 from accounts.models import UserInfo,AuditInfo
 from django.template.context import RequestContext
 
@@ -366,3 +366,111 @@ def edit_vm(request,id):
     #添加跨站请求伪造的认证
     ret.update(csrf(request))
     return render_to_response('assets/edit_vm.html',ret)
+
+
+######机房信息
+@is_login_auth
+def datacenter_index(request,page=1):
+    ret = {'DCObj':None,'UserInfoObj':None,'Side':None,'SideSub':None}
+    ret['Side'] = 'asset'
+    ret['SideSub'] = 'datacenter'
+    DCObj = ServerRoom.objects.all()
+    ret['DCObj'] = DCObj
+    UserInfoObj = UserInfo.objects.get(username=request.session.get('username',None))
+    ret['UserInfoObj'] = UserInfoObj
+    return render(request,'assets/dc_index.html',ret)
+
+@is_login_auth
+def submit_dc(request):
+    ret = {'DCObj':None,'UserInfoObj':None,'Side':None,'SideSub':None}
+    #### 边框信息点亮判断
+    ret['Side'] = 'asset'
+    ret['SideSub'] = 'datacenter'
+    #print "12312"
+    UserInfoObj = UserInfo.objects.get(username=request.session.get('username',None))
+    ret['UserInfoObj'] = UserInfoObj
+    if request.method == 'POST':
+        DCObj_form = ServerRoomForm(request.POST)
+        #print VirtualObj_form
+        if DCObj_form.is_valid():
+            DCObj = DCObj_form.save()
+            #添加记录审计,可以加一些其他操作
+            audit_record_create(request,DCObj.room_name)
+            ret['status'] = 'save ok'
+            
+        else:
+            ret['status'] = 'save error'
+            ret['form'] = DCObj_form
+            #添加跨站请求伪造的认证
+            ret.update(csrf(request))
+            return render(request,'assets/submitdc.html',ret)
+            
+    DCObj_form = ServerRoomForm()
+    ret['form'] = DCObj_form
+    #添加跨站请求伪造的认证
+    ret.update(csrf(request))
+    return render_to_response('assets/submitdc.html',ret)
+
+#删除机房
+@is_login_auth
+def deldc(request,id):
+    DCObj = ServerRoom.objects.get(id=id)
+    audit_record_del(request,DCObj.room_name)
+    DCObj.delete()
+    return redirect("/assets/datacenter/")
+
+#显示机房的信息详情
+@is_login_auth
+def details_dc(request,id):
+    ret = {'DCObj':None,'UserInfoObj':None,'Side':None,'SideSub':None,'AssetsObj':None}
+    #### 边框信息点亮判断
+    ret['Side'] = 'asset'
+    ret['SideSub'] = 'datacenter'
+    DCObj = ServerRoom.objects.get(id=id)
+    ret['DCObj'] = DCObj
+    UserInfoObj = UserInfo.objects.get(username=request.session.get('username',None))
+    ret['UserInfoObj'] = UserInfoObj
+    ret['id'] = id
+    AssetsObj = AssetInfo.objects.filter(location=DCObj)
+    ret['AssetsObj'] = AssetsObj
+    return render_to_response('assets/dc_details.html',ret)
+
+@is_login_auth
+def edit_dc(request,id):
+    ret = {'DCObj':None,'UserInfoObj':None,'Side':None,'SideSub':None}
+    #### 边框信息点亮判断
+    ret['Side'] = 'asset'
+    ret['SideSub'] = 'datacenter'
+    DCInfoObj = ServerRoom.objects.get(id=id)
+    if request.method == 'POST':
+        DCInfoObj_form = ServerRoomForm(data=request.POST,files=request.FILES,instance=DCInfoObj)
+        #print request.POST
+        #print request.FILES['attachment'].name
+        #print DocumentInfoObj.attachment
+        #print str(DocumentInfoObj.attachment)
+        #print DocumentInfoObj_form.attachment
+        if DCInfoObj_form.is_valid():
+            DCObj = DCInfoObj_form.save()
+            #AssetObj = AssetInfoObj_form.save(commit=False)
+            #print AssetObj.app
+            #索引状态放置为b即开始索引
+            audit_record_change(request,DCObj.room_name)
+            #AssetObj.save()
+            ret['status'] = '修改成功'
+        else:
+            ret['status'] = '修改失败'
+            ret['form'] = DCInfoObj_form
+            ret['DCObj'] = DCInfoObj
+            #添加跨站请求伪造的认证
+            ret.update(csrf(request))
+            return render(request,'assets/edit_asset.html',ret)
+            
+    DCInfoObj_form = ServerRoomForm(instance=DCInfoObj)
+    UserInfoObj = UserInfo.objects.get(username=request.session.get('username',None))
+    ret['UserInfoObj'] = UserInfoObj
+    ret['form'] = DCInfoObj_form
+    ret['id'] = id
+    ret['DCObj'] = DCInfoObj
+    #添加跨站请求伪造的认证
+    ret.update(csrf(request))
+    return render_to_response('assets/edit_dc.html',ret)

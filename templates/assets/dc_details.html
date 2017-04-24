@@ -1,0 +1,104 @@
+{% extends "suit/base.html" %}
+
+{% block content %}
+
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+        	<div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>资产管理 <span class="c-gray en">&gt;</span>机房信息<span class="c-gray en">&gt;</span>机房{{ DCObj.room_name }}的详细信息</div>
+        </div>
+    </div>
+</div>
+
+<div class="row-content am-cf">
+
+                <div class="row am-cf">
+                
+                                <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                                    <div class="am-form-group">
+                                        <div class="am-btn-toolbar">
+                                            <div class="am-btn-group am-btn-group-xs">
+                                            	<a href="/assets/newdc" class="am-btn am-btn-default am-btn-success" role="button" target="_blank"><span class="am-icon-plus"></span> 新增</a>
+                                            	<a href="/assets/editdc/{{ DCObj.id }}" class="am-btn am-btn-default am-btn-secondary" role="button"><span class="am-icon-save"></span> 修改</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                
+                    <div class="am-u-sm-12 am-u-md-12  am-u-lg-8">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title am-fl">基本信息</div>
+                            </div>
+                            <div class="widget-body-lg widget-body am-fr" >
+							<ul class="am-list am-list-static">
+							  <li><label class="am-u-sm-3 am-form-label">机房名称</label>{{ DCObj.room_name }}</li>
+							  <li><label for="user-email" class="am-u-sm-3 am-form-label">机房地址</label>{{ DCObj.address }}</li>
+							  <li><label for="user-email" class="am-u-sm-3 am-form-label">联系电话</label>{{ DCObj.phone }}</li>
+							</ul>
+                            </div>
+                        </div>
+                        
+
+
+                    </div>
+                    
+                    <div class="am-u-sm-12 am-u-md-12  am-u-lg-4">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title am-fl">所属资产</div>
+                            </div>
+                            <div class="widget-body widget-body-lg am-fr">
+                            	{% if AssetsObj %}
+                            	{% for i in AssetsObj %}
+                            	<div class="am-progress-title">
+                            	<a href="/assets/details/{{ i.id }}" target="_blank">{{ i.asset_name }}</a>
+                            	<span class="am-fr am-progress-title-more">{{ i.ip }}</span></div>
+                            	{% endfor %}
+                            	{% else %}
+                            	无
+                            	{% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+<!-- 
+                    <div class="am-u-sm-12 am-u-md-12  am-u-lg-4">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title am-fl">专用服务器负载</div>
+                                <div class="widget-function am-fr">
+                                    <a href="javascript:;" class="am-icon-cog"></a>
+                                </div>
+                            </div>
+                            <div class="widget-body widget-body-md am-fr">
+
+                                <div class="am-progress-title">CPU Load <span class="am-fr am-progress-title-more">28% / 100%</span></div>
+                                <div class="am-progress">
+                                    <div class="am-progress-bar" style="width: 15%"></div>
+                                </div>
+                                <div class="am-progress-title">CPU Load <span class="am-fr am-progress-title-more">28% / 100%</span></div>
+                                <div class="am-progress">
+                                    <div class="am-progress-bar  am-progress-bar-warning" style="width: 75%"></div>
+                                </div>
+                                <div class="am-progress-title">CPU Load <span class="am-fr am-progress-title-more">28% / 100%</span></div>
+                                <div class="am-progress">
+                                    <div class="am-progress-bar am-progress-bar-danger" style="width: 35%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+ -->
+
+                </div>
+
+</div>
+
+
+
+
+
+
+
+
+{% endblock %}
