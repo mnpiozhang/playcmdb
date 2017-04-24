@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 from django import forms
-from .models import AssetInfo,VirtualMachineInfo
+from .models import AssetInfo,VirtualMachineInfo,BusinessInfo,ApplicationInfo
 from django.contrib.admin import widgets
 
 

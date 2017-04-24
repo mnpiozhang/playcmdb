@@ -130,10 +130,9 @@ def submit_asset(request):
         AssetObj_form = AssetForm(request.POST)
         #print AssetObj_form
         if AssetObj_form.is_valid():
-            AssetObj = AssetObj_form.save(commit=False)
+            AssetObj = AssetObj_form.save()
             #添加记录审计,可以加一些其他操作
             audit_record_create(request,AssetObj.asset_name)
-            AssetObj.save()
             ret['status'] = 'save ok'
             
         else:
@@ -165,10 +164,11 @@ def edit_asset(request,id):
         #print str(DocumentInfoObj.attachment)
         #print DocumentInfoObj_form.attachment
         if AssetInfoObj_form.is_valid():
-            AssetObj = AssetInfoObj_form.save(commit=False)
+            AssetObj = AssetInfoObj_form.save()
+            #AssetObj = AssetInfoObj_form.save(commit=False)
             #索引状态放置为b即开始索引
             audit_record_change(request,AssetObj.asset_name)
-            AssetObj.save()
+            #AssetObj.save()
             ret['status'] = '修改成功'
         else:
             ret['status'] = '修改失败'
@@ -282,10 +282,9 @@ def submit_virtual(request):
         VirtualObj_form = VirtualForm(request.POST)
         #print VirtualObj_form
         if VirtualObj_form.is_valid():
-            VirtualObj = VirtualObj_form.save(commit=False)
+            VirtualObj = VirtualObj_form.save()
             #添加记录审计,可以加一些其他操作
             audit_record_create(request,VirtualObj.virtual_name)
-            VirtualObj.save()
             ret['status'] = 'save ok'
             
         else:
