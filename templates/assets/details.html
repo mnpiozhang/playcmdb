@@ -82,7 +82,27 @@
 
 
                     </div>
-
+                    
+                    <div class="am-u-sm-12 am-u-md-12  am-u-lg-4">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title am-fl">所拥有的虚拟化内容</div>
+                            </div>
+                            <div class="widget-body widget-body-md am-fr">
+                            	{% if VmObj %}
+                            	{% for i in VmObj %}
+                            	<div class="am-progress-title">
+                            	<a href="/assets/details_vm/{{ i.id }}" target="_blank">{{ i.virtual_name }}</a>
+                            	<span class="am-fr am-progress-title-more">{{ i.virtual_type }}</span></div>
+                            	{% endfor %}
+                            	{% else %}
+                            	无
+                            	{% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+<!-- 
                     <div class="am-u-sm-12 am-u-md-12  am-u-lg-4">
                         <div class="widget am-cf">
                             <div class="widget-head am-cf">
@@ -108,7 +128,7 @@
                             </div>
                         </div>
                     </div>
-
+ -->
 
                 </div>
 

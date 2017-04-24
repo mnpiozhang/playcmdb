@@ -106,11 +106,13 @@ def delasset(request,id):
 #显示资产信息详情
 @is_login_auth
 def details(request,id):
-    ret = {'AssetObj':None,'UserInfoObj':None,'Side':None,'SideSub':None}
+    ret = {'AssetObj':None,'UserInfoObj':None,'Side':None,'SideSub':None,'VmObj':None}
     #### 边框信息点亮判断
     ret['Side'] = 'asset'
     ret['SideSub'] = 'index'
     AssetObj = AssetInfo.objects.get(id=id)
+    VmObj = VirtualMachineInfo.objects.filter(host = AssetObj)
+    ret['VmObj'] = VmObj
     ret['AssetObj'] = AssetObj
     UserInfoObj = UserInfo.objects.get(username=request.session.get('username',None))
     ret['UserInfoObj'] = UserInfoObj
