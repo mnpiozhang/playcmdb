@@ -16,9 +16,12 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from .views import login,logout
+from .views import login,logout,account_info,audit_info,edit_info
 
 urlpatterns = [
     url(r'^login/', login),
     url(r'^logout/', logout),
+    url(r'^info/$',account_info),
+    url(r'^audit/(\d*)', audit_info),
+    url(r'^editinfo/(?P<uname>\w+)/$',edit_info),
 ]

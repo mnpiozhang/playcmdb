@@ -163,9 +163,9 @@
                         <i class="am-icon-group sidebar-nav-link-logo"></i> 账号管理
                         <span class="am-icon-chevron-down am-fr am-margin-right-sm "></span>
                     </a>
-                    <ul class="sidebar-nav sidebar-nav-sub">
+                    <ul class="sidebar-nav sidebar-nav-sub" {% ifequal Side "accounts" %} style="display: block;"{% endifequal %}>
                         <li class="sidebar-nav-link">
-                            <a href="table-list.html">
+                            <a href="/accounts/info/" {% ifequal SideSub "info" %} class="sub-active" {% endifequal %}>
                                 <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 账号信息
                             </a>
                         </li>
