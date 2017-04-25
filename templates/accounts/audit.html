@@ -10,16 +10,6 @@
     </div>
 
 	<div class="row-content am-cf">
-		<div class="row">
-		
-			<div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-				<div class="widget am-cf">
-	                <div class="widget-head am-cf">
-	                    <div class="widget-title am-fl">条件查询</div>
-	                </div>
-				</div>
-			</div>
-		</div>
 		
                 <div class="row">
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
@@ -62,23 +52,6 @@
                 </div>
 	</div><ul class="am-pagination tpl-pagination am-pagination-centered">{{ PageInfo }}</ul>
 </div>
-
-
-{% if popover %}
-<div id="myPopover" class="alert alert-warning">
-	<a href="#" class="close" data-dismiss="alert">&times;</a>
-	{% if popover.id %}
-	<strong>成功！</strong>删除了主机{{ popover.id }}
-	{% else %}
-	<strong>抱歉！</strong>{{ popover.info }}
-	{% endif %}
-</div>
-<script type="text/javascript">
-$(document).ready(function(){ 
-	setTimeout(function(){alert("{{ popover.info }}{{ popover.id }}");},10);  
-}); 
-</script>  
-{% endif %}
 
 
 {% endblock %}
