@@ -67,14 +67,22 @@
                             <div class="widget-body-md widget-body am-fr" >
 							<ul class="am-list am-list-static">
 							  <li><label for="user-email" class="am-u-sm-3 am-form-label">业务条线</label>
+							  {% if AssetObj.business.all %}
 							  {% for i in AssetObj.business.all %}
 							  {{ i }},
 							  {% endfor %}
+							  {% else %}
+							  无
+							  {% endif %}
 							  </li>
 							  <li><label for="user-email" class="am-u-sm-3 am-form-label">部署应用</label>
+							  {% if AssetObj.business.all %}
 							  {% for i in AssetObj.app.all %}
 							  {{ i }},
 							  {% endfor %}
+							  {% else %}
+							  无
+							  {% endif %}
 							  </li>
 							</ul>
                             </div>

@@ -98,7 +98,7 @@ def index(request,page=1):
 @is_login_auth
 def delasset(request,id):
     AssetObj = AssetInfo.objects.get(id=id)
-    audit_record_del(request,AssetObj.asset_name)
+    audit_record_del(request,AssetObj.asset_name,"asset")
     AssetObj.delete()
     return redirect("/assets/index/")
 
@@ -134,7 +134,7 @@ def submit_asset(request):
         if AssetObj_form.is_valid():
             AssetObj = AssetObj_form.save()
             #添加记录审计,可以加一些其他操作
-            audit_record_create(request,AssetObj.asset_name)
+            audit_record_create(request,AssetObj.asset_name,"asset")
             ret['status'] = 'save ok'
             
         else:
@@ -170,7 +170,7 @@ def edit_asset(request,id):
             #AssetObj = AssetInfoObj_form.save(commit=False)
             #print AssetObj.app
             #索引状态放置为b即开始索引
-            audit_record_change(request,AssetObj.asset_name)
+            audit_record_change(request,AssetObj.asset_name,"asset")
             #AssetObj.save()
             ret['status'] = '修改成功'
         else:
@@ -288,7 +288,7 @@ def submit_virtual(request):
         if VirtualObj_form.is_valid():
             VirtualObj = VirtualObj_form.save()
             #添加记录审计,可以加一些其他操作
-            audit_record_create(request,VirtualObj.virtual_name)
+            audit_record_create(request,VirtualObj.virtual_name,"vm")
             ret['status'] = 'save ok'
             
         else:
@@ -308,7 +308,7 @@ def submit_virtual(request):
 @is_login_auth
 def delvirtual(request,id):
     VirtualObj = VirtualMachineInfo.objects.get(id=id)
-    audit_record_del(request,VirtualObj.virtual_name)
+    audit_record_del(request,VirtualObj.virtual_name,"vm")
     VirtualObj.delete()
     return redirect("/assets/virtual/")
 
@@ -346,7 +346,7 @@ def edit_vm(request,id):
             #AssetObj = AssetInfoObj_form.save(commit=False)
             #print AssetObj.app
             #索引状态放置为b即开始索引
-            audit_record_change(request,VirtualObj.virtual_name)
+            audit_record_change(request,VirtualObj.virtual_name,"vm")
             #AssetObj.save()
             ret['status'] = '修改成功'
         else:
@@ -395,7 +395,7 @@ def submit_dc(request):
         if DCObj_form.is_valid():
             DCObj = DCObj_form.save()
             #添加记录审计,可以加一些其他操作
-            audit_record_create(request,DCObj.room_name)
+            audit_record_create(request,DCObj.room_name,"dc")
             ret['status'] = 'save ok'
             
         else:
@@ -415,7 +415,7 @@ def submit_dc(request):
 @is_login_auth
 def deldc(request,id):
     DCObj = ServerRoom.objects.get(id=id)
-    audit_record_del(request,DCObj.room_name)
+    audit_record_del(request,DCObj.room_name,"dc")
     DCObj.delete()
     return redirect("/assets/datacenter/")
 
@@ -454,7 +454,7 @@ def edit_dc(request,id):
             #AssetObj = AssetInfoObj_form.save(commit=False)
             #print AssetObj.app
             #索引状态放置为b即开始索引
-            audit_record_change(request,DCObj.room_name)
+            audit_record_change(request,DCObj.room_name,"dc")
             #AssetObj.save()
             ret['status'] = '修改成功'
         else:

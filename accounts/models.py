@@ -29,3 +29,4 @@ class AuditInfo(models.Model):
     target = models.CharField(max_length=30,verbose_name = u'操作目标')
     timestamp = models.DateTimeField(auto_now_add = True,verbose_name = u'操作时间')
     remote_ip = models.CharField(max_length=30,verbose_name = u'操作远端ip')
+    type = models.CharField(max_length=30,verbose_name = u'操作类型')
