@@ -1,0 +1,84 @@
+{% extends "suit/base.html" %}
+
+{% block content %}
+
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+        	<div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>账号管理 <span class="c-gray en">&gt;</span>审计信息</div>
+        </div>
+    </div>
+
+	<div class="row-content am-cf">
+		<div class="row">
+		
+			<div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+				<div class="widget am-cf">
+	                <div class="widget-head am-cf">
+	                    <div class="widget-title am-fl">条件查询</div>
+	                </div>
+				</div>
+			</div>
+		</div>
+		
+                <div class="row">
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title am-fl"><span>共有数据：<strong>{{ AllCount }}</strong> 条</span></div>
+                            </div>
+                            <div class="widget-body  widget-body-lg am-fr">
+
+                                <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                                    <thead>
+                                        <tr>
+											<th></th>
+											<th>操作用户</th>
+											<th>操作类型</th>
+											<th>操作</th>
+											<th>操作目标</th>
+											<th>操作时间</th>
+											<th>远端IP</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+									{% for i in AuditInfoObjs %}
+										<tr class="text-c">
+											<td><!-- <input type="checkbox" value="{{ i.id }}" name="checkboxdel[]"> --></td>
+											<td>{{ i.account }}</td>
+											<td>{{ i.type }}</td>
+											<td>{{ i.operation }}</td>
+											<td>{{ i.target }}</td>
+											<td>{{ i.timestamp|date:"Y-m-d H:i" }}</td>
+											<td>{{ i.remote_ip }}</td>
+										</tr>
+									{% endfor %}
+                                        <!-- more data -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+	</div><ul class="am-pagination tpl-pagination am-pagination-centered">{{ PageInfo }}</ul>
+</div>
+
+
+{% if popover %}
+<div id="myPopover" class="alert alert-warning">
+	<a href="#" class="close" data-dismiss="alert">&times;</a>
+	{% if popover.id %}
+	<strong>成功！</strong>删除了主机{{ popover.id }}
+	{% else %}
+	<strong>抱歉！</strong>{{ popover.info }}
+	{% endif %}
+</div>
+<script type="text/javascript">
+$(document).ready(function(){ 
+	setTimeout(function(){alert("{{ popover.info }}{{ popover.id }}");},10);  
+}); 
+</script>  
+{% endif %}
+
+
+{% endblock %}

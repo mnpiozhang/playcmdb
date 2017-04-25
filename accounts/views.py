@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 from django.views.decorators.csrf import csrf_exempt
-from .models import UserInfo
+from .models import UserInfo,AuditInfo
 from django.shortcuts import redirect,HttpResponse,render_to_response,render
 from .decorators import is_login_auth
 import hashlib
-from assets.utils import audit_record_login,audit_record_logout,audit_record_change
+from assets.utils import audit_record_login,audit_record_logout,audit_record_change,Page,page_div
 from .forms import UserInfoForm
 from django.template.context_processors import csrf
 
@@ -90,5 +90,24 @@ def edit_info(request,uname):
         
         
 @is_login_auth
-def audit_info(request,id):
-    pass
+def audit_info(request,page):
+    try:
+        page = int(page)
+    except Exception:
+        page = 1
+    ret = {'UserInfoObj':None,'Side':None,'SideSub':None,'AuditInfoObjs':None}
+    #### 边框信息点亮判断
+    ret['Side'] = 'accounts'
+    ret['SideSub'] = 'audit'
+    account = request.session.get('username',None)
+    allMatchAudit = AuditInfo.objects.filter(account = account).order_by('-timestamp')
+    AllCount = allMatchAudit.count()
+    ret['AllCount'] = AllCount
+    PageObj = Page(AllCount,page,10)
+    AuditInfoObjs = allMatchAudit[PageObj.begin:PageObj.end]
+    pageurl = 'audit'
+    app = 'accounts'
+    pageinfo = page_div(page, PageObj.all_page_count,app,pageurl)
+    ret['PageInfo'] = pageinfo
+    ret['AuditInfoObjs'] = AuditInfoObjs
+    return render_to_response('accounts/audit.html',ret)
