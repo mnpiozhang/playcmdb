@@ -13,6 +13,8 @@ class UserInfo(models.Model):
     def save(self,*args,**kwargs):
         self.password = hashlib.sha1(self.password+self.username).hexdigest()
         super(UserInfo,self).save(*args,**kwargs)
+    def savebase(self,*args,**kwargs):
+        super(UserInfo,self).save(*args,**kwargs)
     def __unicode__(self):
         return self.realname
     

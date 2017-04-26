@@ -67,8 +67,11 @@ def edit_info(request,uname):
         if request.method == 'POST':
             UserInfoObj_form = UserInfoForm(data=request.POST,files=request.FILES,instance=UserInfoObj)
             if UserInfoObj_form.is_valid():
-                UserObj = UserInfoObj_form.save()
-                audit_record_change(request,UserObj.username,"account")
+                changed_telphone = request.POST.get('telphone',None)
+                UserInfoObj.telphone = changed_telphone
+                UserInfoObj.savebase()
+                #UserObj = UserInfoObj_form.save()
+                audit_record_change(request,UserInfoObj.username,"account")
                 ret['status'] = '修改成功'
             else:
                 ret['status'] = '修改失败'

@@ -12,8 +12,9 @@ class UserInfoForm(forms.models.ModelForm):
     class Meta:
         model = UserInfo
         fields = ('telphone',)
+        exclude = ['password']
         widgets = {
-                   'telphone' : forms.TextInput(attrs={'placeholder':'机房名称'}),
+                   'telphone' : forms.TextInput(attrs={'placeholder':'联系电话'}),
                    }
         error_messages = {
                           'telphone' :{'required':'请修改手机号码'},
