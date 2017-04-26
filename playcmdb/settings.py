@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'accounts',
     'assets',
     'business',
+    'dashboard',
 )
 
 MIDDLEWARE_CLASSES = (
