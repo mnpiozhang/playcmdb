@@ -44,16 +44,17 @@ def index(request,page=1):
                 tmpstatus = searchpublish
             Qset['searchip'] = searchip
             Qset['tmpstarttime'] = tmpstarttime
+            #print tmpstarttime
             Qset['tmpendtime'] = tmpendtime
             #print Qset
             #判断是否输入了开始时间，没输入或输入非法则默认为1970.01.01
             try:
-                searchstarttime = datetime.datetime.strptime(tmpstarttime,'%Y-%m-%d')
+                searchstarttime = datetime.datetime.strptime(tmpstarttime,'%m/%d/%Y')
             except:
                 searchstarttime = datetime.datetime(1970, 1, 1)
             #判断是否输入了结束时间或输入非法，没输入或输入非法则默认为现在
             try:
-                searchendtime = datetime.datetime.strptime(tmpendtime,'%Y-%m-%d')
+                searchendtime = datetime.datetime.strptime(tmpendtime,'%m/%d/%Y')
             except:
                 searchendtime = datetime.datetime.now()
             allAsset = AssetInfo.objects.filter(Q(ip__contains=searchip)
