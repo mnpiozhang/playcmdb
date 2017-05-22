@@ -2,25 +2,177 @@
 
 {% block content %}
 
-<div class="container-fluid am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-        	<div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>资产管理 <span class="c-gray en">&gt;</span>资产信息</div>
-        </div>
-    </div>
+<section class="content-header">
+  <h1>
+   	 资产信息
+    <small>Preview</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><i class="fa fa-dashboard"></i> Home</li>
+    <li>资产管理</li>
+    <li class="active">资产信息</li>
+  </ol>
+</section>
 
-	<div class="row-content am-cf">
-		<div class="row">
+
+<section class="content">
+  <div class="row">
+	<div class="col-md-12">
+          <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+              <div class="am-form-group">
+                  <div class="am-btn-toolbar">
+                      <div class="am-btn-group am-btn-group-xs">
+                      	<a href="/assets/newasset" class="am-btn am-btn-default am-btn-success" role="button" target="_blank"><span class="am-icon-plus"></span> 新增</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+           
+          <div class="box box-primary">
+            <div class="box-header with-border">
+            <h3 class="box-title">条件查询</h3>
+          </div>
+          
+          <form role="form" action='/assets/index/' method='GET'>
+          <div class="box-body">
+          <div class="row">
+          <div class="col-md-4">
+          	<input type="hidden" name="issearch" value=1>
+
+          	<div class="form-group">
+          	<label>状态</label>
+          	<select class="form-control select2" style="width: 100%;" name="searchpublish" data-am-selected="{searchBox: 1}" style="display: none;">
+				<option value="all" {% ifequal Qset.searchpublish "all" %}selected = "selected"{% endifequal %} >所有</option>
+				<option value="p" {% ifequal Qset.searchpublish "p" %}selected = "selected"{% endifequal %} >已发布</option>
+				<option value="d" {% ifequal Qset.searchpublish "d" %}selected = "selected"{% endifequal %} >已下架</option>
+			</select>
+          	</div>
+
+            <div class="form-group">
+              <label>IP地址</label>
+			  <input type="text" class="form-control" name="searchip"  placeholder="根据ip" value="{{ Qset.searchip }}">
+            </div>
+          	
+          </div>
+          
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>资产名称</label>
+			  <input type="text" class="form-control" name="searchasset"  placeholder="根据资产名" value="{{ Qset.searchasset }}">
+            </div>
+
+            <div class="form-group">
+              <label>开始时间</label>
+              <div class="input-group date">
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <input type="text" class="form-control pull-right" name="searchstarttime" id="datepicker" placeholder="开始时间" value="{{ Qset.tmpstarttime }}" >
+              </div>
+              <!-- /.input group -->
+            </div>
 		
-           <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
-               <div class="am-form-group">
-                   <div class="am-btn-toolbar">
-                       <div class="am-btn-group am-btn-group-xs">
-                       	<a href="/assets/newasset" class="am-btn am-btn-default am-btn-success" role="button" target="_blank"><span class="am-icon-plus"></span> 新增</a>
-                       </div>
-                   </div>
-               </div>
-           </div>
+
+		
+          </div>
+          
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>序列号</label>
+			  <input type="text" class="form-control" name="searchsn"  placeholder="根据序列号" value="{{ Qset.searchsn }}">
+            </div>
+            
+            <div class="form-group">
+              <label>结束时间</label>
+              <div class="input-group date">
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <input type="text" name="searchendtime" class="form-control pull-right" placeholder="结束时间" id="datepicker2" value="{{ Qset.tmpendtime }}">
+              </div>
+              <!-- /.input group -->
+            </div>
+          </div>
+          </div>
+          </div>
+		  <button class="am-btn am-btn-primary am-btn-xs" type="submit">搜索</button>
+		</form>
+          
+          
+          
+        <!-- /.box-header -->
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Minimal</label>
+                <select class="form-control select2" style="width: 100%;">
+                  <option selected="selected">Alabama</option>
+                  <option>Alaska</option>
+                  <option>California</option>
+                  <option>Delaware</option>
+                  <option>Tennessee</option>
+                  <option>Texas</option>
+                  <option>Washington</option>
+                </select>
+              </div>
+              <!-- /.form-group -->
+              <div class="form-group">
+                <label>Disabled</label>
+                <select class="form-control select2" disabled="disabled" style="width: 100%;">
+                  <option selected="selected">Alabama</option>
+                  <option>Alaska</option>
+                  <option>California</option>
+                  <option>Delaware</option>
+                  <option>Tennessee</option>
+                  <option>Texas</option>
+                  <option>Washington</option>
+                </select>
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Multiple</label>
+                <select class="form-control select2" multiple="multiple" data-placeholder="Select a State" style="width: 100%;">
+                  <option>Alabama</option>
+                  <option>Alaska</option>
+                  <option>California</option>
+                  <option>Delaware</option>
+                  <option>Tennessee</option>
+                  <option>Texas</option>
+                  <option>Washington</option>
+                </select>
+              </div>
+              <!-- /.form-group -->
+              <div class="form-group">
+                <label>Disabled Result</label>
+                <select class="form-control select2" style="width: 100%;">
+                  <option selected="selected">Alabama</option>
+                  <option>Alaska</option>
+                  <option disabled="disabled">California (disabled)</option>
+                  <option>Delaware</option>
+                  <option>Tennessee</option>
+                  <option>Texas</option>
+                  <option>Washington</option>
+                </select>
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+          Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about
+          the plugin.
+        </div>
+      </div>
+      <!-- /.box -->
+		
+		
 		
 			<div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
 				<div class="widget am-cf">
@@ -82,6 +234,9 @@
 				</div>
 			</div>
 		</div>
+		
+		
+
 		
                 <div class="row">
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
@@ -157,9 +312,10 @@
                         </div>
                     </div>
                 </div>
-	</div><ul class="am-pagination tpl-pagination am-pagination-centered">{{ PageInfo }}</ul>
-</div>
+  </div>
+<ul class="am-pagination tpl-pagination am-pagination-centered">{{ PageInfo }}</ul>
 
+</section>
 
 {% if popover %}
 <div id="myPopover" class="alert alert-warning">
@@ -174,8 +330,10 @@
 $(document).ready(function(){ 
 	setTimeout(function(){alert("{{ popover.info }}{{ popover.id }}");},10);  
 }); 
-</script>  
+</script>
 {% endif %}
+
+
 
 
 {% endblock %}
