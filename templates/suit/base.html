@@ -1,222 +1,260 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{% block title %}{% endblock %}</title>
-    <meta name="description" content="这是一个 index 页面">
-    <meta name="keywords" content="index">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <link rel="icon" type="image/png" href="/static/assets/img/favicon.png">
-    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
-    <script src="/static/assets/js/echarts.min.js"></script>
-    <link rel="stylesheet" href="/static/assets/css/amazeui.min.css" />
-    <link rel="stylesheet" href="/static/assets/css/amazeui.datatables.min.css" />
-    <link rel="stylesheet" href="/static/assets/css/app.css">
-    <script src="/static/assets/js/jquery.min.js"></script>
-    <!-- 
-	<script src="/static/bootstrap/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css"> -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AdminLTE 2 | Simple Tables</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="/static/plugins/datepicker/datepicker3.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/static/dist/css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="/static/dist/css/skins/_all-skins.min.css">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
 </head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
 
-<body data-type="widgets" class="theme-white">
-    <!-- <script src="/static/assets/js/theme.js"></script> -->
-    <div class="am-g tpl-g">
-        <!-- 头部 -->
-        <header>
-            <!-- logo -->
-            <div class="am-fl tpl-header-logo">
-                <a href="javascript:;">playcmdb</a>
-            </div>
-            <!-- 右侧内容 -->
-            <div class="tpl-header-fluid">
-                <!-- 侧边切换 -->
-                <div class="am-fl tpl-header-switch-button am-icon-list">
-                    <span>
+  <header class="main-header">
+    <!-- Logo -->
+    <a href="#" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>C</b>M</span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>PlayCmdb</b>LTE</span>
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
 
-                </span>
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+
+          <!-- User Account: style can be found in dropdown.less -->
+          <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="/static/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+              <span class="hidden-xs">{{ UserInfoObj.username }}</span>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="user-header">
+                <img src="/static/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+
+                <p>
+                  {{ UserInfoObj.username }}
+                  <small>Member since Nov. 2012</small>
+                </p>
+              </li>
+              <!-- Menu Body -->
+              <li class="user-body">
+                <div class="row">
+                  <div class="col-xs-4 text-center">
+                    <a href="#">{{ UserInfoObj.username }}</a>
+                  </div>
+                  <div class="col-xs-4 text-center">
+                    <a href="#">{{ UserInfoObj.type }}</a>
+                  </div>
+                  <div class="col-xs-4 text-center">
+                    <a href="#">{{ UserInfoObj.realname }}</a>
+                  </div>
                 </div>
-                <!-- 其它功能-->
-                <div class="am-fr tpl-header-navbar">
-                    <ul>
-                        <!-- 欢迎语 -->
-                        <li class="am-text-sm tpl-header-navbar-welcome">
-                            <a href="javascript:;">欢迎你, <span>{{ UserInfoObj.username }}</span> </a>
-                        </li>
-
-                        <!-- 个人信息 -->
-                        <li class="am-dropdown" data-am-dropdown>
-                            <a href="javascript:;" class="am-dropdown-toggle" data-am-dropdown-toggle>
-                                <i class="am-icon-user"></i>
-                            </a>
-                            <!-- 弹出信息 -->
-                            <ul class="am-dropdown-content tpl-dropdown-content">
-                                <li class="tpl-dropdown-menu-notifications">
-                                    <a href="javascript:;" class="tpl-dropdown-menu-notifications-item am-cf">
-                                        <div class="tpl-dropdown-menu-notifications-title">
-                                            <i class="am-icon-line-chart"></i>
-                                            <span> 账号：{{ UserInfoObj.username }}</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="tpl-dropdown-menu-notifications">
-                                    <a href="javascript:;" class="tpl-dropdown-menu-notifications-item am-cf">
-                                        <div class="tpl-dropdown-menu-notifications-title">
-                                            <i class="am-icon-star"></i>
-                                            <span> 用户类型：{{ UserInfoObj.type }}</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="tpl-dropdown-menu-notifications">
-                                    <a href="javascript:;" class="tpl-dropdown-menu-notifications-item am-cf">
-                                    	<div class="tpl-dropdown-menu-notifications-title">
-                                            <i class="am-icon-hand-o-right"></i>
-                                            <span> 用户姓名：{{ UserInfoObj.realname }}</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                
-								<li class="tpl-dropdown-menu-notifications">
-                                </li>
-                            </ul>
-                        </li>
-
-                        <!-- 退出 -->
-                        <li class="am-text-sm">
-                            <a href="/accounts/logout/">
-                                <span class="am-icon-sign-out"></span> 退出
-                            </a>
-                        </li>
-                    </ul>
+                <!-- /.row -->
+              </li>
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                <div class="pull-left">
+                  <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
-            </div>
-
-        </header>
-
-        <!-- 风格切换 
-        <div class="tpl-skiner">
-            <div class="tpl-skiner-toggle am-icon-cog">
-            </div>
-            <div class="tpl-skiner-content">
-                <div class="tpl-skiner-content-title">
-                    选择主题
+                <div class="pull-right">
+                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
                 </div>
-                <div class="tpl-skiner-content-bar">
-                    <span class="skiner-color skiner-white" data-color="theme-white"></span>
-                    <span class="skiner-color skiner-black" data-color="theme-black"></span>
-                </div>
-            </div>
-        </div>
-		-->
-
-
-
-        <!-- 侧边导航栏 -->
-        <div class="left-sidebar">
-            <!-- 用户信息 -->
-            <div class="tpl-sidebar-user-panel">
-                <div class="tpl-user-panel-slide-toggleable">
-                    <div class="tpl-user-panel-profile-picture">
-                        <img src="/static/assets/img/favicon.ico" alt="">
-                    </div>
-                    <span class="user-panel-logged-in-text">
-              		<i class="am-icon-circle-o am-text-success tpl-user-panel-status-icon"></i>
-					playcmdb
-          			</span>
-                </div>
-            </div>
-        
-        
-            <!-- 菜单 -->
-            <ul class="sidebar-nav">
-                <li class="sidebar-nav-link">
-                    <a href="javascript:;" class="sidebar-nav-sub-title">
-                        <i class="am-icon-server sidebar-nav-link-logo"></i> 资产管理
-                        <span class="am-icon-chevron-down am-fr am-margin-right-sm "></span>
-                    </a>
-                    <ul class="sidebar-nav sidebar-nav-sub" {% ifequal Side "asset" %} style="display: block;"{% endifequal %}>
-                        <li class="sidebar-nav-link">
-                            <a href="/assets/index/" {% ifequal SideSub "index" %} class="sub-active" {% endifequal %}>
-                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 资产信息
-                            </a>
-                        </li>
-
-                        <li class="sidebar-nav-link">
-                            <a href="/assets/virtual/" {% ifequal SideSub "virtual" %} class="sub-active" {% endifequal %}>
-                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 虚拟化信息
-                            </a>
-                        </li>
-                        
-                        <li class="sidebar-nav-link">
-                            <a href="/assets/datacenter/" {% ifequal SideSub "datacenter" %} class="sub-active" {% endifequal %}>
-                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 机房信息
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                
-                <li class="sidebar-nav-link">
-                    <a href="javascript:;" class="sidebar-nav-sub-title">
-                        <i class="am-icon-group sidebar-nav-link-logo"></i> 账号管理
-                        <span class="am-icon-chevron-down am-fr am-margin-right-sm "></span>
-                    </a>
-                    <ul class="sidebar-nav sidebar-nav-sub" {% ifequal Side "accounts" %} style="display: block;"{% endifequal %}>
-                        <li class="sidebar-nav-link">
-                            <a href="/accounts/info/" {% ifequal SideSub "info" %} class="sub-active" {% endifequal %}>
-                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 账号信息
-                            </a>
-                        </li>
-
-                        <li class="sidebar-nav-link">
-                            <a href="/accounts/audit/" {% ifequal SideSub "audit" %} class="sub-active" {% endifequal %}>
-                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 操作审计
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="sidebar-nav-link">
-                    <a href="/dashboard/dashboard/"  {% ifequal Side "dashboard" %} class="active" {% endifequal %}>
-                        <i class="am-icon-dashboard sidebar-nav-link-logo"></i> 仪表盘
-                    </a>
-                </li>
-                
-                <li class="sidebar-nav-link">
-                    <a href="sign-up.html">
-                        <i class="am-icon-clone sidebar-nav-link-logo"></i> 注册
-                        <span class="am-badge am-badge-secondary sidebar-nav-link-logo-ico am-round am-fr am-margin-right-sm">6</span>
-                    </a>
-                </li>
-                <li class="sidebar-nav-link">
-                    <a href="login.html">
-                        <i class="am-icon-key sidebar-nav-link-logo"></i> 登录
-                    </a>
-                </li>
-                <li class="sidebar-nav-link">
-                    <a href="404.html">
-                        <i class="am-icon-tv sidebar-nav-link-logo"></i> 404错误
-                    </a>
-                </li>
-
+              </li>
             </ul>
+          </li>
+          <!-- Control Sidebar Toggle Button 
+          <li>
+            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+          </li>-->
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <!-- Sidebar user panel -->
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img src="/static/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
-
-        <!-- 内容区域 -->
-        <div class="tpl-content-wrapper">
-
-			{% block content %}{% endblock %}
-
+        <div class="pull-left info">
+          <p>{{ UserInfoObj.username }}</p>
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
-    </div>
-    </div>
-    <script src="/static/assets/js/amazeui.min.js"></script>
-    <script src="/static/assets/js/amazeui.datatables.min.js"></script>
-    <script src="/static/assets/js/dataTables.responsive.min.js"></script>
-    <script src="/static/assets/js/app.js"></script>
+      </div>
 
+      <!-- /.search form -->
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu">
+        <li class="header">MAIN NAVIGATION</li>
+        <li {% ifequal Side "asset" %}class="treeview active" {% else %} class="treeview" {% endifequal %} >
+          <a href="#">
+            <i class="fa fa-server"></i> 
+            <span>资产管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li {% ifequal SideSub "index" %} class="active" {% endifequal %}><a href="/assets/index/"><i class="fa fa-circle-o"></i> 资产信息</a></li>
+            <li {% ifequal SideSub "virtual" %} class="active" {% endifequal %}><a href="/assets/virtual/"><i class="fa fa-circle-o"></i> 虚拟化信息</a></li>
+            <li {% ifequal SideSub "datacenter" %} class="active" {% endifequal %}><a href="/assets/datacenter/"><i class="fa fa-circle-o"></i> 机房信息</a></li>
+          </ul>
+        </li>
+
+        <li {% ifequal Side "accounts" %}class="treeview active" {% else %} class="treeview" {% endifequal %}>
+          <a href="#">
+            <i class="fa fa-user"></i>
+            <span>账号管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li {% ifequal SideSub "info" %} class="active" {% endifequal %}><a href="/accounts/info/"><i class="fa fa-circle-o"></i> 账号信息</a></li>
+            <li {% ifequal SideSub "audit" %} class="active" {% endifequal %}><a href="/accounts/audit/"><i class="fa fa-circle-o"></i> 操作审计</a></li>
+          </ul>
+        </li>
+        
+        <li {% ifequal Side "dashboard" %}class="treeview active" {% else %} class="treeview" {% endifequal %}>
+          <a href="/dashboard/dashboard/">
+          	<i class="fa fa-dashboard"></i> 
+            <span>仪表盘</span>
+          </a>
+        </li>
+        
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-laptop"></i>
+            <span>UI Elements</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="../UI/general.html"><i class="fa fa-circle-o"></i> General</a></li>
+            <li><a href="../UI/icons.html"><i class="fa fa-circle-o"></i> Icons</a></li>
+            <li><a href="../UI/buttons.html"><i class="fa fa-circle-o"></i> Buttons</a></li>
+            <li><a href="../UI/sliders.html"><i class="fa fa-circle-o"></i> Sliders</a></li>
+            <li><a href="../UI/timeline.html"><i class="fa fa-circle-o"></i> Timeline</a></li>
+            <li><a href="../UI/modals.html"><i class="fa fa-circle-o"></i> Modals</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-edit"></i> <span>Forms</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="../forms/general.html"><i class="fa fa-circle-o"></i> General Elements</a></li>
+            <li><a href="../forms/advanced.html"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>
+            <li><a href="../forms/editors.html"><i class="fa fa-circle-o"></i> Editors</a></li>
+          </ul>
+        </li>
+
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <div class="content-wrapper">
+	{% block content %}{% endblock %}
+  </div>
+
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <b>Version</b> 2.3.8
+    </div>
+    <strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> PlayCmdb ^_^
+  </footer>
+
+
+
+
+
+
+
+
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="/static/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+<!-- Slimscroll -->
+<script src="/static/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="/static/plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="/static/dist/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/static/dist/js/demo.js"></script>
+<!-- bootstrap datepicker -->
+<script src="/static/plugins/datepicker/bootstrap-datepicker.js"></script>
+<!-- bootstrap color picker -->
+<script src="/static/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+<!-- bootstrap time picker -->
+<script src="/static/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+<!-- SlimScroll 1.3.0 -->
+<script src="/static/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script>
+$(function () {
+
+  //Date picker
+  $('#datepicker').datepicker({
+    autoclose: true
+  });
+
+  //Date picker
+  $('#datepicker2').datepicker({
+    autoclose: true
+  });
+  
+  //Timepicker
+  $(".timepicker").timepicker({
+    showInputs: false
+  });
+});
+</script>
 </body>
-
 </html>

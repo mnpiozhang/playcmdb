@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="description" content="这是一个 index 页面">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="icon" type="image/png" href="/static/assets/img/favicon.png">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+    <script src="/static/assets/js/echarts.min.js"></script>
+    <link rel="stylesheet" href="/static/assets/css/amazeui.min.css" />
+    <link rel="stylesheet" href="/static/assets/css/amazeui.datatables.min.css" />
+    <link rel="stylesheet" href="/static/assets/css/app.css">
+    <script src="/static/assets/js/jquery.min.js"></script>
+    <!-- 
+	<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css"> -->
+</head>
+
+<body data-type="widgets" class="theme-white">
+    <!-- <script src="/static/assets/js/theme.js"></script> -->
+    <div class="am-g tpl-g">
+        <!-- 头部 -->
+        <header>
+            <!-- logo -->
+            <div class="am-fl tpl-header-logo">
+                <a href="javascript:;">playcmdb</a>
+            </div>
+            <!-- 右侧内容 -->
+            <div class="tpl-header-fluid">
+                <!-- 侧边切换 -->
+                <div class="am-fl tpl-header-switch-button am-icon-list">
+                    <span>
+
+                </span>
+                </div>
+                <!-- 其它功能-->
+                <div class="am-fr tpl-header-navbar">
+                    <ul>
+                        <!-- 欢迎语 -->
+                        <li class="am-text-sm tpl-header-navbar-welcome">
+                            <a href="javascript:;">欢迎你, <span>{{ UserInfoObj.username }}</span> </a>
+                        </li>
+
+                        <!-- 个人信息 -->
+                        <li class="am-dropdown" data-am-dropdown>
+                            <a href="javascript:;" class="am-dropdown-toggle" data-am-dropdown-toggle>
+                                <i class="am-icon-user"></i>
+                            </a>
+                            <!-- 弹出信息 -->
+                            <ul class="am-dropdown-content tpl-dropdown-content">
+                                <li class="tpl-dropdown-menu-notifications">
+                                    <a href="javascript:;" class="tpl-dropdown-menu-notifications-item am-cf">
+                                        <div class="tpl-dropdown-menu-notifications-title">
+                                            <i class="am-icon-line-chart"></i>
+                                            <span> 账号：{{ UserInfoObj.username }}</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="tpl-dropdown-menu-notifications">
+                                    <a href="javascript:;" class="tpl-dropdown-menu-notifications-item am-cf">
+                                        <div class="tpl-dropdown-menu-notifications-title">
+                                            <i class="am-icon-star"></i>
+                                            <span> 用户类型：{{ UserInfoObj.type }}</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="tpl-dropdown-menu-notifications">
+                                    <a href="javascript:;" class="tpl-dropdown-menu-notifications-item am-cf">
+                                    	<div class="tpl-dropdown-menu-notifications-title">
+                                            <i class="am-icon-hand-o-right"></i>
+                                            <span> 用户姓名：{{ UserInfoObj.realname }}</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                
+								<li class="tpl-dropdown-menu-notifications">
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- 退出 -->
+                        <li class="am-text-sm">
+                            <a href="/accounts/logout/">
+                                <span class="am-icon-sign-out"></span> 退出
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </header>
+
+        <!-- 风格切换 
+        <div class="tpl-skiner">
+            <div class="tpl-skiner-toggle am-icon-cog">
+            </div>
+            <div class="tpl-skiner-content">
+                <div class="tpl-skiner-content-title">
+                    选择主题
+                </div>
+                <div class="tpl-skiner-content-bar">
+                    <span class="skiner-color skiner-white" data-color="theme-white"></span>
+                    <span class="skiner-color skiner-black" data-color="theme-black"></span>
+                </div>
+            </div>
+        </div>
+		-->
+
+
+
+        <!-- 侧边导航栏 -->
+        <div class="left-sidebar">
+            <!-- 用户信息 -->
+            <div class="tpl-sidebar-user-panel">
+                <div class="tpl-user-panel-slide-toggleable">
+                    <div class="tpl-user-panel-profile-picture">
+                        <img src="/static/assets/img/favicon.ico" alt="">
+                    </div>
+                    <span class="user-panel-logged-in-text">
+              		<i class="am-icon-circle-o am-text-success tpl-user-panel-status-icon"></i>
+					playcmdb
+          			</span>
+                </div>
+            </div>
+        
+        
+            <!-- 菜单 -->
+            <ul class="sidebar-nav">
+                <li class="sidebar-nav-link">
+                    <a href="javascript:;" class="sidebar-nav-sub-title">
+                        <i class="am-icon-server sidebar-nav-link-logo"></i> 资产管理
+                        <span class="am-icon-chevron-down am-fr am-margin-right-sm "></span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-nav-sub" {% ifequal Side "asset" %} style="display: block;"{% endifequal %}>
+                        <li class="sidebar-nav-link">
+                            <a href="/assets/index/" {% ifequal SideSub "index" %} class="sub-active" {% endifequal %}>
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 资产信息
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav-link">
+                            <a href="/assets/virtual/" {% ifequal SideSub "virtual" %} class="sub-active" {% endifequal %}>
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 虚拟化信息
+                            </a>
+                        </li>
+                        
+                        <li class="sidebar-nav-link">
+                            <a href="/assets/datacenter/" {% ifequal SideSub "datacenter" %} class="sub-active" {% endifequal %}>
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 机房信息
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li class="sidebar-nav-link">
+                    <a href="javascript:;" class="sidebar-nav-sub-title">
+                        <i class="am-icon-group sidebar-nav-link-logo"></i> 账号管理
+                        <span class="am-icon-chevron-down am-fr am-margin-right-sm "></span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-nav-sub" {% ifequal Side "accounts" %} style="display: block;"{% endifequal %}>
+                        <li class="sidebar-nav-link">
+                            <a href="/accounts/info/" {% ifequal SideSub "info" %} class="sub-active" {% endifequal %}>
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 账号信息
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav-link">
+                            <a href="/accounts/audit/" {% ifequal SideSub "audit" %} class="sub-active" {% endifequal %}>
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 操作审计
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-nav-link">
+                    <a href="/dashboard/dashboard/"  {% ifequal Side "dashboard" %} class="active" {% endifequal %}>
+                        <i class="am-icon-dashboard sidebar-nav-link-logo"></i> 仪表盘
+                    </a>
+                </li>
+                
+                <li class="sidebar-nav-link">
+                    <a href="sign-up.html">
+                        <i class="am-icon-clone sidebar-nav-link-logo"></i> 注册
+                        <span class="am-badge am-badge-secondary sidebar-nav-link-logo-ico am-round am-fr am-margin-right-sm">6</span>
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="login.html">
+                        <i class="am-icon-key sidebar-nav-link-logo"></i> 登录
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="404.html">
+                        <i class="am-icon-tv sidebar-nav-link-logo"></i> 404错误
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <!-- 内容区域 -->
+        <div class="tpl-content-wrapper">
+
+			{% block content %}{% endblock %}
+
+        </div>
+    </div>
+    </div>
+    <script src="/static/assets/js/amazeui.min.js"></script>
+    <script src="/static/assets/js/amazeui.datatables.min.js"></script>
+    <script src="/static/assets/js/dataTables.responsive.min.js"></script>
+    <script src="/static/assets/js/app.js"></script>
+
+</body>
+
+</html>
