@@ -2,46 +2,83 @@
 
 {% block content %}
 
-<div class="container-fluid am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-        	<div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>资产管理 <span class="c-gray en">&gt;</span>资产信息<span class="c-gray en">&gt;</span>添加新设备</div>
-        </div>
-    </div>
-</div>
+<section class="content-header">
+  <h1>
+   	 添加新设备
+    <small>Preview</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><i class="fa fa-dashboard"></i> Home</li>
+    <li>资产管理</li>
+    <li class="active">资产信息</li>
+    <li>添加新设备</li>
+  </ol>
+</section>
 
-<div class="row-content am-cf">
+<section class="content">
+  <div class="row">
+	<div class="col-md-12">
+		<div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">基本信息</h3>
+            </div>
+			
+			<form role="form"  action='/assets/newasset/' method='POST'>{% csrf_token %}
+			  <div class="box-body">
+			    <div  class="row">
+			    <div class="col-md-4">
+                  <div class="form-group">
+                    <label>资产名称 <span>asset name</span></label>
+                       <div>
+						{{ form.asset_name }}
+						{% if form.errors %}
+						<small  style="color:red;">{{ form.errors.asset_name }}</small>
+						{% endif %}
+                     </div>
+                   </div>
+                   
 
-                <div class="row am-cf">
-                
-                
-                    <div class="am-u-sm-12 am-u-md-12  am-u-lg-12">
-                    <form class="am-form tpl-form-line-form " action='/assets/newasset/' method='POST'>{% csrf_token %}
-                        <div class="widget am-cf">
-                        
-                            <div class="widget-head am-cf">
-                                <div class="widget-title am-fl">基本信息</div>
-                            </div>
-                            <div class="widget-body-lg widget-body am-fr" >
-                                    <div class="am-form-group">
-                                        <label for="user-name" class="am-u-sm-3 am-form-label">资产名称 <span class="tpl-form-line-small-title">asset name</span></label>
-                                        <div class="am-u-sm-9">
-											{{ form.asset_name }}
-						                    {% if form.errors %}
-						                    <small  style="color:red;">{{ form.errors.asset_name }}</small>
-						                    {% endif %}
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="am-form-group">
-                                        <label for="user-name" class="am-u-sm-3 am-form-label">资产类型 <span class="tpl-form-line-small-title">asset type</span></label>
-                                        <div class="am-u-sm-9">
-											{{ form.asset_type }}
-						                    {% if form.errors %}
-						                    <small  style="color:red;">{{ form.errors.asset_type }}</small>
-						                    {% endif %}
-                                        </div>
-                                    </div>
+                   
+                </div>
+                </div>                    
+
+
+				<div  class="row">
+				<div class="col-md-4">
+				
+                  <div class="form-group">
+                    <label>资产类型 <span>asset type</span></label>
+                       <div>
+						{{ form.asset_type }}
+						{% if form.errors %}
+						<small  style="color:red;">{{ form.errors.asset_type }}</small>
+						{% endif %}
+                     </div>
+                   </div>
+				
+				
+				</div>
+				</div>
+
+				<div  class="row">
+				<div class="col-md-4">
+				
+                  <div class="form-group">
+                    <label>系统类型<span>system type</span></label>
+                       <div>
+						{{ form.system_type }}
+						{% if form.errors %}
+						<small  style="color:red;">{{ form.errors.system_type }}</small>
+						{% endif %}
+                     </div>
+                   </div>
+				
+				
+				</div>
+				</div>
+
+
+
                                     
                                     <div class="am-form-group">
                                         <label for="user-name" class="am-u-sm-3 am-form-label">系统类型 <span class="tpl-form-line-small-title">system type</span></label>
@@ -142,7 +179,7 @@
 						                    {% endif %}
                                         </div>
                                     </div>
-                            </div>
+
                             
                             
                         </div>
@@ -231,6 +268,19 @@
                                         <label style="color:red;">{{ status }}</label>  
                                     </div>
 					</form>
+		</div>
+	</div>
+  </div>
+</section>
+
+
+<div class="row-content am-cf">
+
+                <div class="row am-cf">
+                
+                
+                    <div class="am-u-sm-12 am-u-md-12  am-u-lg-12">
+
                     </div>
 
 
