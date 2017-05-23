@@ -113,4 +113,6 @@ def audit_info(request,page):
     pageinfo = page_div(page, PageObj.all_page_count,app,pageurl)
     ret['PageInfo'] = pageinfo
     ret['AuditInfoObjs'] = AuditInfoObjs
+    UserInfoObj = UserInfo.objects.get(username=account)
+    ret['UserInfoObj'] = UserInfoObj
     return render_to_response('accounts/audit.html',ret)
