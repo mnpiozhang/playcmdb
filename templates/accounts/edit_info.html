@@ -2,37 +2,31 @@
 
 {% block content %}
 
-<div class="container-fluid am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-        	<div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>账号管理 <span class="c-gray en">&gt;</span>账号信息<span class="c-gray en">&gt;</span>编辑账号{{ UserInfoObj.username }}的详细信息</div>
-        </div>
-    </div>
-</div>
+<section class="content-header">
+  <h1>
+   	编辑 账号信息
+    <small>Preview</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><i class="fa fa-dashboard"></i> Home</li>
+    <li>账号管理</li>
+    <li class="active">账号信息</li>
+    <li>编辑账号{{ UserInfoObj.username }}的详细信息</li>
+  </ol>
+</section>
 
-<div class="row-content am-cf">
 
-                <div class="row am-cf">
-                
-                                <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
-                                    <div class="am-form-group">
-                                        <div class="am-btn-toolbar">
-                                            <div class="am-btn-group am-btn-group-xs">
-                                            	<a href="/accounts/info" class="am-btn am-btn-default am-btn-warning" role="button"><span class="am-icon-arrow-left"></span> 返回</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                
-                    <div class="am-u-sm-12 am-u-md-12  am-u-lg-12">
-                    <form class="am-form tpl-form-line-form " action='/accounts/editinfo/{{ UserInfoObj.username }}/' method='POST'>{% csrf_token %}
-                        <div class="widget am-cf">
-                        
-                            <div class="widget-head am-cf">
-                                <div class="widget-title am-fl">基本信息</div>
-                            </div>
-                            <div class="widget-body-lg widget-body am-fr" >
-                                    
+<section class="content-header">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <h3 class="box-title">基本信息</h3>
+              <a href="/accounts/info" class="btn btn-default" role="button"> 返回</a>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+			<form role="form" action='/accounts/editinfo/{{ UserInfoObj.username }}/' method='POST'>{% csrf_token %}
                                     <div class="am-form-group">
                                         <label for="user-name" class="am-u-sm-3 am-form-label">联系电话 <span class="tpl-form-line-small-title">telephone</span></label>
                                         <div class="am-u-sm-9">
@@ -42,28 +36,16 @@
 						                    {% endif %}
                                         </div>
                                     </div>
-                            </div>
-                        </div>
-                        
-                                    <div class="am-form-group">
-                                        <div class="am-u-sm-12 am-u-sm-push-12">
-                                        	<input type='submit' value='提交' class="am-btn am-btn-primary tpl-btn-bg-color-success " role="button"/>
-                                        </div>
-                                        <label style="color:red;">{{ status }}</label>  
-                                    </div>
-					</form>
-                    </div>
-
-
-                </div>
-
-</div>
-
-
-
-
-
-
-
+	        <div class="box-footer">
+	            <input type='submit' value='提交' class="btn btn-primary" role="button"/>
+	        </div><label style="color:red;">{{ status }}</label>  
+			</form>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+</section>
 
 {% endblock %}
