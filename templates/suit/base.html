@@ -144,13 +144,13 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li {% ifequal SideSub "info" %} class="active" {% endifequal %}><a href="../charts/chartjs.html"><i class="fa fa-circle-o"></i> 账号信息</a></li>
-            <li {% ifequal SideSub "audit" %} class="active" {% endifequal %}><a href="../charts/morris.html"><i class="fa fa-circle-o"></i> 操作审计</a></li>
+            <li {% ifequal SideSub "info" %} class="active" {% endifequal %}><a href="/accounts/info/"><i class="fa fa-circle-o"></i> 账号信息</a></li>
+            <li {% ifequal SideSub "audit" %} class="active" {% endifequal %}><a href="/accounts/audit/"><i class="fa fa-circle-o"></i> 操作审计</a></li>
           </ul>
         </li>
         
         <li {% ifequal Side "dashboard" %}class="treeview active" {% else %} class="treeview" {% endifequal %}>
-          <a href="../../documentation/index.html">
+          <a href="/dashboard/dashboard/">
           	<i class="fa fa-dashboard"></i> 
             <span>仪表盘</span>
           </a>
