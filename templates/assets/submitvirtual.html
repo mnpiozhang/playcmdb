@@ -2,191 +2,196 @@
 
 {% block content %}
 
-<div class="container-fluid am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-        	<div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>资产管理 <span class="c-gray en">&gt;</span>虚拟化信息<span class="c-gray en">&gt;</span>添加新虚拟化设备</div>
-        </div>
+<section class="content-header">
+  <h1>
+   	 添加新虚拟化设备
+    <small>Preview</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><i class="fa fa-dashboard"></i> Home</li>
+    <li>资产管理</li>
+    <li class="active">虚拟化信息</li>
+    <li> 添加新虚拟化设备</li>
+  </ol>
+</section>
+
+<section class="content">
+  <div class="row">
+	<div class="col-md-12">
+	<div class="box box-primary">
+	<form role="form"  action='/assets/newvirtual/' method='POST'>{% csrf_token %}
+    <div class="box-header with-border">
+      <h3 class="box-title">基本信息</h3>
     </div>
-</div>
-
-<div class="row-content am-cf">
-
-                <div class="row am-cf">
-                
-                
-                    <div class="am-u-sm-12 am-u-md-12  am-u-lg-12">
-                    <form class="am-form tpl-form-line-form " action='/assets/newvirtual/' method='POST'>{% csrf_token %}
-                        <div class="widget am-cf">
-                        
-                            <div class="widget-head am-cf">
-                                <div class="widget-title am-fl">基本信息</div>
-                            </div>
-                            <div class="widget-body-lg widget-body am-fr" >
-                                    <div class="am-form-group">
-                                        <label for="user-name" class="am-u-sm-3 am-form-label">虚拟化设备名称 <span class="tpl-form-line-small-title">vm name</span></label>
-                                        <div class="am-u-sm-9">
-											{{ form.virtual_name }}
-						                    {% if form.errors %}
-						                    <small  style="color:red;">{{ form.errors.virtual_name }}</small>
-						                    {% endif %}
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="am-form-group">
-                                        <label for="user-name" class="am-u-sm-3 am-form-label">虚拟化类型 <span class="tpl-form-line-small-title">vm type</span></label>
-                                        <div class="am-u-sm-9">
-											{{ form.virtual_type }}
-						                    {% if form.errors %}
-						                    <small  style="color:red;">{{ form.errors.virtual_type }}</small>
-						                    {% endif %}
-                                        </div>
-                                    </div>
-                                    
-                                    
-                                    <div class="am-form-group">
-                                        <label for="user-name" class="am-u-sm-3 am-form-label">系统位数 <span class="tpl-form-line-small-title">machine type</span></label>
-                                        <div class="am-u-sm-9">
-											{{ form.machine_type }}
-						                    {% if form.errors %}
-						                    <small  style="color:red;">{{ form.errors.machine_type }}</small>
-						                    {% endif %}
-                                        </div>
-                                    </div>
-                                    
-                                    
-                                    <div class="am-form-group">
-                                        <label for="user-name" class="am-u-sm-3 am-form-label">MAC地址 <span class="tpl-form-line-small-title">mac</span></label>
-                                        <div class="am-u-sm-9">
-											{{ form.mac }}
-						                    {% if form.errors %}
-						                    <small  style="color:red;">{{ form.errors.mac }}</small>
-						                    {% endif %}
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="am-form-group">
-                                        <label for="user-name" class="am-u-sm-3 am-form-label">内存大小 <span class="tpl-form-line-small-title">memory</span></label>
-                                        <div class="am-u-sm-9">
-											{{ form.memery_size }}
-						                    {% if form.errors %}
-						                    <small  style="color:red;">{{ form.errors.memery_size }}</small>
-						                    {% endif %}
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="am-form-group">
-                                        <label for="user-name" class="am-u-sm-3 am-form-label">cpu型号 <span class="tpl-form-line-small-title">cpu</span></label>
-                                        <div class="am-u-sm-9">
-											{{ form.cpu }}
-						                    {% if form.errors %}
-						                    <small  style="color:red;">{{ form.errors.cpu }}</small>
-						                    {% endif %}
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="am-form-group">
-                                        <label for="user-name" class="am-u-sm-3 am-form-label">cpucore数量 <span class="tpl-form-line-small-title">cpu core</span></label>
-                                        <div class="am-u-sm-9">
-											{{ form.cpu_cores }}
-						                    {% if form.errors %}
-						                    <small  style="color:red;">{{ form.errors.cpu_cores }}</small>
-						                    {% endif %}
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="am-form-group">
-                                        <label for="user-name" class="am-u-sm-3 am-form-label">物理cpu数量 <span class="tpl-form-line-small-title">physical core</span></label>
-                                        <div class="am-u-sm-9">
-											{{ form.cpu_pyhsical }}
-						                    {% if form.errors %}
-						                    <small  style="color:red;">{{ form.errors.cpu_pyhsical }}</small>
-						                    {% endif %}
-                                        </div>
-                                    </div>
-                                    
-                                    
-                                    <div class="am-form-group">
-                                        <label for="user-name" class="am-u-sm-3 am-form-label">ip地址 <span class="tpl-form-line-small-title">ip address</span></label>
-                                        <div class="am-u-sm-9">
-											{{ form.ip }}
-						                    {% if form.errors %}
-						                    <small  style="color:red;">{{ form.errors.ip }}</small>
-						                    {% endif %}
-                                        </div>
-                                    </div>
-                            </div>
-                        </div>
-                        
-
-                        <div class="widget am-cf">
-                            <div class="widget-head am-cf">
-                                <div class="widget-title am-fl">业务信息</div>
-                            </div>
-                            <div class="widget-body-lg widget-body am-fr" >
-
-                                    <div class="am-form-group">
-                                        <label for="user-name" class="am-u-sm-3 am-form-label">归属业务条线 <span class="tpl-form-line-small-title">business</span></label>
-                                        <div class="am-u-sm-9">
-											{{ form.business }}
-						                    {% if form.errors %}
-						                    <small  style="color:red;">{{ form.errors.business }}</small>
-						                    {% endif %}
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="am-form-group">
-                                        <label for="user-name" class="am-u-sm-3 am-form-label">部署的应用 <span class="tpl-form-line-small-title">application</span></label>
-                                        <div class="am-u-sm-9">
-											{{ form.app }}
-						                    {% if form.errors %}
-						                    <small  style="color:red;">{{ form.errors.app }}</small>
-						                    {% endif %}
-                                        </div>
-                                    </div>
-
-                                    <div class="am-form-group">
-                                        <label for="user-name" class="am-u-sm-3 am-form-label">使用状态 <span class="tpl-form-line-small-title">status</span></label>
-                                        <div class="am-u-sm-9">
-											{{ form.status }}
-						                    {% if form.errors %}
-						                    <small  style="color:red;">{{ form.errors.status }}</small>
-						                    {% endif %}
-                                        </div>
-                                    </div>
-
-                                    <div class="am-form-group">
-                                        <label for="user-name" class="am-u-sm-3 am-form-label">宿主机 <span class="tpl-form-line-small-title">host</span></label>
-                                        <div class="am-u-sm-9">
-											{{ form.host }}
-						                    {% if form.errors %}
-						                    <small  style="color:red;">{{ form.errors.host }}</small>
-						                    {% endif %}
-                                        </div>
-                                    </div>
-
-
-                            </div>
-                        </div>
-                                    <div class="am-form-group">
-                                        <div class="am-u-sm-12 am-u-sm-push-12">
-                                        	<input type='submit' value='提交' class="am-btn am-btn-primary tpl-btn-bg-color-success " role="button"/>
-                                        </div>
-                                        <label style="color:red;">{{ status }}</label>  
-                                    </div>
-					</form>
-                    </div>
-
-
-                </div>
-
-</div>
-
-
-
-
-
-
+	
+  	<div class="box-body">
+ 		<div  class="row">
+    		<div class="col-md-4">
+    		
+                  <div class="form-group">
+                    <label>虚拟化设备名称 <span>vm name</span></label>
+                       <div>
+						{{ form.virtual_name }}
+						{% if form.errors %}
+						<small  style="color:red;">{{ form.errors.virtual_name }}</small>
+						{% endif %}
+                     </div>
+                   </div>
+    		
+                  <div class="form-group">
+                    <label>MAC地址 <span>mac</span></label>
+                       <div>
+						{{ form.mac }}
+						{% if form.errors %}
+						<small  style="color:red;">{{ form.errors.mac }}</small>
+						{% endif %}
+                     </div>
+                   </div>
+    		
+    		
+                  <div class="form-group">
+                    <label>cpucore数量 <span>cpu core</span></label>
+                       <div>
+						{{ form.cpu_cores }}
+						{% if form.errors %}
+						<small  style="color:red;">{{ form.errors.cpu_cores }}</small>
+						{% endif %}
+                     </div>
+                   </div>
+    		</div>
+    		
+    		<div class="col-md-4">
+    		
+                  <div class="form-group">
+                    <label>虚拟化类型 <span>vm type</span></label>
+                       <div>
+						{{ form.virtual_type }}
+						{% if form.errors %}
+						<small  style="color:red;">{{ form.errors.virtual_type }}</small>
+						{% endif %}
+                     </div>
+                   </div>
+    		
+                  <div class="form-group">
+                    <label>内存大小<span>memory</span></label>
+                       <div>
+						{{ form.memery_size }}
+						{% if form.errors %}
+						<small  style="color:red;">{{ form.errors.memery_size }}</small>
+						{% endif %}
+                     </div>
+                   </div>
+    		
+                  <div class="form-group">
+                    <label>物理cpu数量<span>physical core</span></label>
+                       <div>
+						{{ form.cpu_pyhsical }}
+						{% if form.errors %}
+						<small  style="color:red;">{{ form.errors.cpu_pyhsical }}</small>
+						{% endif %}
+                     </div>
+                   </div>
+    		
+    		</div>
+    		
+    		<div class="col-md-4">
+    		
+                  <div class="form-group">
+                    <label>系统位数 <span>machine type</span></label>
+                       <div>
+						{{ form.machine_type }}
+						{% if form.errors %}
+						<small  style="color:red;">{{ form.errors.machine_type }}</small>
+						{% endif %}
+                     </div>
+                   </div>
+    		
+                  <div class="form-group">
+                    <label>cpu型号 <span>cpu</span></label>
+                       <div>
+						{{ form.cpu }}
+						{% if form.errors %}
+						<small  style="color:red;">{{ form.errors.cpu }}</small>
+						{% endif %}
+                     </div>
+                   </div>
+    		
+                  <div class="form-group">
+                    <label>ip地址 <span>ip address</span></label>
+                       <div>
+						{{ form.ip }}
+						{% if form.errors %}
+						<small  style="color:red;">{{ form.errors.ip }}</small>
+						{% endif %}
+                     </div>
+                   </div>
+    		</div>
+    		
+    	</div>
+    </div>
+    
+    <div class="box-header with-border">
+      <h3 class="box-title">业务信息</h3>
+    </div>
+    
+  	<div class="box-body">
+ 		<div  class="row">
+    		<div class="col-md-4">
+                  <div class="form-group">
+                    <label>归属业务条线 <span>business</span></label>
+                       <div>
+						{{ form.business }}
+						{% if form.errors %}
+						<small  style="color:red;">{{ form.errors.business }}</small>
+						{% endif %}
+                     </div>
+                   </div>
+                   
+                  <div class="form-group">
+                    <label>宿主机 <span>host</span></label>
+                       <div>
+						{{ form.host }}
+						{% if form.errors %}
+						<small  style="color:red;">{{ form.errors.host }}</small>
+						{% endif %}
+                     </div>
+                   </div>
+    		</div>
+    		
+    		<div class="col-md-4">
+                  <div class="form-group">
+                    <label>部署的应用<span>application</span></label>
+                       <div>
+						{{ form.app }}
+						{% if form.errors %}
+						<small  style="color:red;">{{ form.errors.app }}</small>
+						{% endif %}
+                     </div>
+                   </div>
+    		</div>
+    		
+    		<div class="col-md-4">
+                  <div class="form-group">
+                    <label>使用状态<span>status</span></label>
+                       <div>
+						{{ form.status }}
+						{% if form.errors %}
+						<small  style="color:red;">{{ form.errors.status }}</small>
+						{% endif %}
+                     </div>
+                   </div>
+    		</div>
+    	</div>
+    </div>
+		       <div class="box-footer text-center">
+		       		<input type='submit' value='提交' class="btn btn-primary" role="button"/>
+		       		<label style="color:red;">{{ status }}</label>  
+		       </div>
+	</form>
+	</div>
+	</div>
+  </div>
+</section>
 
 
 {% endblock %}
