@@ -86,9 +86,9 @@ class ServerRoomForm(forms.models.ModelForm):
         model = ServerRoom
         fields = ('room_name','address','phone')
         widgets = {
-                   'room_name' : forms.TextInput(attrs={'id':'user-name','class':'tpl-form-input','placeholder':'机房名称'}),
-                   'phone' : forms.TextInput(attrs={'placeholder':'联系电话'}),
-                   'address' : forms.TextInput(attrs={'placeholder':'地址'}),
+                   'room_name' : forms.TextInput(attrs={'id':'user-name','class':'form-control','placeholder':'机房名称'}),
+                   'phone' : forms.TextInput(attrs={'placeholder':'联系电话','class':'form-control'}),
+                   'address' : forms.TextInput(attrs={'placeholder':'地址','class':'form-control'}),
                    }
         error_messages = {
                           'room_name' :{'required':'请输入机房名称'},
