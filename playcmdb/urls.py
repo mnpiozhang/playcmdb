@@ -19,6 +19,7 @@ from django.contrib import admin
 import accounts
 import assets
 import dashboard
+import api
 from accounts.views import login
 
 #保证admin的时间控件可以用，默认时需要登录admin用户后才能使用，不然使用时会因为获取不到token而使用不了，这里使用直接跳过。
@@ -31,5 +32,6 @@ urlpatterns = [
     url(r'^accounts/', include('accounts.urls')),
     url(r'^assets/', include('assets.urls')),
     url(r'^dashboard/', include('dashboard.urls')),
+    url(r'^api/', include('api.urls')),
     url(r'^$', login),
 ]

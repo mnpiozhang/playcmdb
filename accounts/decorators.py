@@ -26,3 +26,39 @@ def is_admin_auth(view_func):
         else:
             return HttpResponse("usertype is not admin , you have no permission to link remote host")
     return wrapper
+
+'''
+请求规则，请求中添加以下两个http请求头
+Authorization 加密后的字符串 为用户密码 + 用户名 做 sha1加密运算后的字符串
+Account-ID 用户username
+'''
+#api接口认证
+def api_auth(view_func):
+    @wraps(view_func)
+    def wrapper(request,*args,**kwargs):
+        '''
+        for k,v in request.META.items():
+            print k , v
+        
+        django中http头会进行转换，会将自己添加的http请求头大写并前面增加大写HTTP_ 例如
+        Authorization 请求 转换为 HTTP_AUTHORIZATION
+        Account-ID 请求 转换为 HTTP_ACCOUNT_ID
+        '''
+        token = request.META.get('HTTP_AUTHORIZATION', 'unknown')
+        username = request.META.get('HTTP_ACCOUNT_ID', 'unknown')
+        print token
+        print username
+        
+        if token == 'unknown' or username == 'unknown':
+            return HttpResponse("auth fail")
+        else:
+            try:
+                userauth = UserInfo.objects.get(username=username)
+                password = userauth.password
+                if token == password:
+                    return HttpResponse("auth ok")
+                else:
+                    return HttpResponse("auth fail")
+            except:
+                return HttpResponse("auth fail")
+    return wrapper
