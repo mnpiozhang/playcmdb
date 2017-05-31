@@ -46,8 +46,8 @@ def api_auth(view_func):
         '''
         token = request.META.get('HTTP_AUTHORIZATION', 'unknown')
         username = request.META.get('HTTP_ACCOUNT_ID', 'unknown')
-        print token
-        print username
+        #print token
+        #print username
         
         if token == 'unknown' or username == 'unknown':
             return HttpResponse("auth fail")
@@ -56,7 +56,8 @@ def api_auth(view_func):
                 userauth = UserInfo.objects.get(username=username)
                 password = userauth.password
                 if token == password:
-                    return HttpResponse("auth ok")
+                    #return HttpResponse("auth ok")
+                    return view_func(request,*args, **kwargs)
                 else:
                     return HttpResponse("auth fail")
             except:
