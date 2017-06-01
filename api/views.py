@@ -16,38 +16,40 @@ headers
 '''
 @api_auth
 def assets_list(request):
-
-    searchasset = request.GET.get('searchasset',"")
-    searchsn = request.GET.get('searchsn',"")
-    searchpublish = request.GET.get('searchpublish',"")
-    searchip = request.GET.get('searchip',"")
-    tmpstarttime = request.GET.get('searchstarttime',"")
-    tmpendtime = request.GET.get('searchendtime',"")
-
-    if searchpublish == "all":
-        tmpstatus = ""
+    if request.method == 'GET':
+        searchasset = request.GET.get('searchasset',"")
+        searchsn = request.GET.get('searchsn',"")
+        searchpublish = request.GET.get('searchpublish',"")
+        searchip = request.GET.get('searchip',"")
+        tmpstarttime = request.GET.get('searchstarttime',"")
+        tmpendtime = request.GET.get('searchendtime',"")
+    
+        if searchpublish == "all":
+            tmpstatus = ""
+        else:
+            tmpstatus = searchpublish
+        #判断是否输入了开始时间，没输入或输入非法则默认为1970.01.01
+        try:
+            searchstarttime = datetime.datetime.strptime(tmpstarttime,'%m/%d/%Y')
+        except:
+            searchstarttime = datetime.datetime(1970, 1, 1)
+        #判断是否输入了结束时间或输入非法，没输入或输入非法则默认为现在
+        try:
+            searchendtime = datetime.datetime.strptime(tmpendtime,'%m/%d/%Y')
+        except:
+            searchendtime = datetime.datetime.now()
+        #print searchendtime
+        allAsset = AssetInfo.objects.filter(Q(ip__contains=searchip)
+                                            &Q(asset_name__contains=searchasset)
+                                            &Q(status__contains=tmpstatus)
+                                            &Q(serial_number__contains=searchsn)
+                                            &Q(timestamp__gte=searchstarttime)
+                                            &Q(timestamp__lte=searchendtime))
+        result_to_json = serializers.serialize("json", allAsset)
+        #print result_to_json
+        return HttpResponse(result_to_json)
     else:
-        tmpstatus = searchpublish
-    #判断是否输入了开始时间，没输入或输入非法则默认为1970.01.01
-    try:
-        searchstarttime = datetime.datetime.strptime(tmpstarttime,'%m/%d/%Y')
-    except:
-        searchstarttime = datetime.datetime(1970, 1, 1)
-    #判断是否输入了结束时间或输入非法，没输入或输入非法则默认为现在
-    try:
-        searchendtime = datetime.datetime.strptime(tmpendtime,'%m/%d/%Y')
-    except:
-        searchendtime = datetime.datetime.now()
-    #print searchendtime
-    allAsset = AssetInfo.objects.filter(Q(ip__contains=searchip)
-                                        &Q(asset_name__contains=searchasset)
-                                        &Q(status__contains=tmpstatus)
-                                        &Q(serial_number__contains=searchsn)
-                                        &Q(timestamp__gte=searchstarttime)
-                                        &Q(timestamp__lte=searchendtime))
-    result_to_json = serializers.serialize("json", allAsset)
-    #print result_to_json
-    return HttpResponse(result_to_json)
+        return HttpResponse("must use get method")
 
 @api_auth
 def create_new_room(request):
